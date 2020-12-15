@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { NavLink } from "react-router-dom";
 
 const TopNav = () => {
   return (
@@ -8,22 +9,38 @@ const TopNav = () => {
           <div className='col-sm-6 col-xs-12'>
             <ul>
               <li>
-                <a href='google.com'> همکاری در فروش </a>
-                <a href='google.com'> درباره ما </a>
-                <a href='google.com'> تماس با ما </a>
+                <NavLink to='/' exact activeStyle={{ color: "lime" }}>
+                  {" "}
+                  صفحه اصلی{" "}
+                </NavLink>
+                <NavLink to='/about' activeStyle={{ color: "lime" }}>
+                  {" "}
+                  درباره ما{" "}
+                </NavLink>
+                <NavLink to='/contact' activeStyle={{ color: "lime" }}>
+                  {" "}
+                  تماس با ما{" "}
+                </NavLink>
               </li>
             </ul>
           </div>
           <div className='col-sm-6 col-xs-12'>
             <div className='clientarea'>
-              <div className='loggein '>
+              {/* <div className='loggein '>
                 <i className='zmdi zmdi-account'></i>
                 <a href='google.com'> نسترن پورشریف ، خوش آمدی </a>
-              </div>
-              <div className='signin hidden'>
+              </div> */}
+              <div className='signin'>
                 <i className='zmdi zmdi-account'></i>
-                <a href='google.com'> ورود </a> /
-                <a href='google.com'> عضویت </a>
+                <NavLink to='/login' activeStyle={{ color: "lime" }}>
+                  {" "}
+                  ورود{" "}
+                </NavLink>{" "}
+                /
+                <NavLink to='/register' activeStyle={{ color: "lime" }}>
+                  {" "}
+                  عضویت{" "}
+                </NavLink>
               </div>
             </div>
           </div>

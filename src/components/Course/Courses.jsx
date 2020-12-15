@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-const Course = () => {
+const Courses = () => {
   return (
     <Fragment>
           <section className='terms-items'>
@@ -118,4 +118,4 @@ const Course = () => {
   );
 };
 
-export default Course;
+export default Courses;
