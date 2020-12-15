@@ -3,8 +3,6 @@ import React, { Fragment } from "react";
 const Course = () => {
   return (
     <Fragment>
-      <main id='home-page'>
-        <div className='container'>
           <section className='terms-items'>
             <header>
               <h2> آخرین دوره های تاپ لرن </h2>
@@ -116,8 +114,6 @@ const Course = () => {
               </div>
             </div>
           </section>
-        </div>
-      </main>
     </Fragment>
   );
 };

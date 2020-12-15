@@ -1,24 +1,25 @@
 import React, { Fragment } from "react";
-import MainNav from "./../components/Course/MainNav";
 import TopNav from "./../components/Common/TopNav";
 import Footer from "./../components/Common/Footer";
-import Course from "./../components/Course/Courses";
-import Header from './../components/Course/Header';
+import Header from "./../components/Course/Header";
+import MainNav from "./../components/Course/MainNav";
 
-const App = (props) => {
+const MainLayout = (props) => {
   return (
     <Fragment>
       <div className='landing-layer'>
         <div className='container'>
           <TopNav />
-          <Header/>
+          <Header />
         </div>
       </div>
       <MainNav />
-      <Course />
+      <main id='home-page'>
+        <div className='container'>{props.children}</div>
+      </main>
       <Footer />
     </Fragment>
   );
 };
 
-export default App;
+export default MainLayout;
