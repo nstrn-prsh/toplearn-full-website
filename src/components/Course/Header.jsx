@@ -5,7 +5,7 @@ const Header = () => {
     <Fragment>
       <header>
         <a href='google.com' className='logo'>
-          <img src='images/logo.png' />
+          <img src='images/logo.png' alt="tl" />
         </a>
         <h1> با اساتید مجرب و کارآزموده در خودآموز تاپ لرن </h1>
         <h2> آموزش ببینید ، تجربه کسب کنید و بازار کار شوید </h2>
