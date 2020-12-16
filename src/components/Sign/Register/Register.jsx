@@ -1,26 +1,18 @@
-import React, { Fragment, useState } from "react";
+import React, { useContext, Fragment } from "react";
+import ContextRegister from "./ContextRegister";
 
 const Register = () => {
-  const [getFullName, setFullName] = useState("");
-  const [getEmail, setEmail] = useState("");
-  const [getPassword, setPassword] = useState("");
+  const context = useContext(ContextRegister);
+  const {
+    submitButton,
+    FullName,
+    fullNameInput,
+    Email,
+    Password,
+    emailInput,
+    passwordInput,
+  } = context;
 
-  const resetState = () => {
-    setFullName("");
-    setEmail("");
-    setPassword("");
-  };
-
-  const submitButton = (event) => {
-    event.preventDefault();
-    const user = {
-      getFullName,
-      getEmail,
-      getPassword,
-    };
-    alert(`${getFullName} در حال ثبت نام...`);
-    resetState();
-  };
   return (
     <Fragment>
       <main className='client-page'>
@@ -30,7 +22,7 @@ const Register = () => {
           </header>
 
           <div className='form-layer'>
-            <form  onSubmit={submitButton}>
+            <form onSubmit={submitButton}>
               <div className='input-group'>
                 <span className='input-group-addon' id='username'>
                   <i className='zmdi zmdi-account'></i>
@@ -40,8 +32,8 @@ const Register = () => {
                   className='form-control'
                   placeholder='نام و نام خانوادگی'
                   aria-describedby='username'
-                  value={getFullName}
-                  onChange={(e) => setFullName(e.target.value)}
+                  value={FullName}
+                  onChange={fullNameInput}
                 />
               </div>
 
@@ -54,8 +46,8 @@ const Register = () => {
                   className='form-control'
                   placeholder='ایمیل'
                   aria-describedby='Email-address'
-                  value={getEmail}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={Email}
+                  onChange={emailInput}
                 />
               </div>
 
@@ -68,8 +60,8 @@ const Register = () => {
                   className='form-control'
                   placeholder='رمز عبور '
                   aria-describedby='Password'
-                  value={getPassword}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={Password}
+                  onChange={passwordInput}
                 />
               </div>
 
@@ -92,10 +84,7 @@ const Register = () => {
                 </a>
               </div>
 
-              <button className='btn btn-success'>
-                {" "}
-                عضویت در سایت{" "}
-              </button>
+              <button className='btn btn-success'> عضویت در سایت </button>
             </form>
           </div>
         </div>
