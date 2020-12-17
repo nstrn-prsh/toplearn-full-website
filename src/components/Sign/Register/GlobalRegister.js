@@ -1,67 +1,57 @@
-import axios from "axios";
+// Global state file for register
+// all functions are here
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import ContextRegister from "./ContextRegister";
+import { registerAxios } from "./../../../services/userService";
 
+/* nokte : *********************************** 
+esme getter va setter ha az tarafe server miad 
+ps ma nemitonim be delkhah esm bezarim barash */
 const GlobalRegister = (props) => {
-  const [getFullName, setFullName] = useState("");
-  const [getEmail, setEmail] = useState("");
-  const [getPassword, setPassword] = useState("");
+  const [fullname, setFullname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const resetState = () => {
-    setFullName("");
+    setFullname("");
     setEmail("");
     setPassword("");
   };
 
-  const submitButton = (event) => {
+  const submitButton = async (event) => {
     event.preventDefault();
     const user = {
-      getFullName,
-      getEmail,
-      getPassword,
+      fullname,
+      email,
+      password,
     };
-    // alert(`${getFullName} در حال ثبت نام...`);
-    axios
-      .post(
-        "https://toplearnapi.ghorbany.dev/api/register",
-        JSON.stringify(user),
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      )
-      .then(({ data, status }) => {
-        console.log(data);
-        if (status === 201) {
-          // 200 : ok 
-          // 201 : created
-          // 202 : accepted
-          // 218 : this is fine
-          toast.success("با موفقیت انجام شد.", {
-            position: "top-center",
-            closeOnClick: true,
-          });
-          resetState();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("مشکلی پیش آمده.", {
+    // alert(`${fullname} در حال ثبت نام...`);
+    /*
+    200 : ok
+    201 : created
+    202 : accepted
+    218 : this is fine
+    */
+    const { status } = await registerAxios(user);
+    try {
+      if (status === 201) {
+        toast.success("با موفقیت انجام شد.", {
           position: "top-center",
           closeOnClick: true,
         });
+        resetState();
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("مشکلی پیش آمده.", {
+        position: "top-center",
+        closeOnClick: true,
       });
+    }
   };
-
-  // let re = /\S/g;
-  //   if (re.exec(getTodo) !== null) {
-  //     todos.push(todo);
-  //     setTodos(todos);
-  //     setTodo("");
-  //   }
-
   const fullNameInput = (event) => {
-    setFullName(event.target.value);
+    setFullname(event.target.value);
   };
   const emailInput = (event) => {
     setEmail(event.target.value);
@@ -73,9 +63,9 @@ const GlobalRegister = (props) => {
   return (
     <ContextRegister.Provider
       value={{
-        FullName: getFullName,
-        Email: getEmail,
-        Password: getPassword,
+        FullName: fullname,
+        Email: email,
+        Password: password,
         resetState: resetState,
         submitButton: submitButton,
         fullNameInput: fullNameInput,

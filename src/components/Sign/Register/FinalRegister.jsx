@@ -1,3 +1,4 @@
+// final register file -- use this
 import React from "react";
 import GlobalRegister from './GlobalRegister';
 import Register from './Register';

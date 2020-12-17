@@ -1,17 +1,9 @@
+// we use functions here with jsx
 import React, { useContext, Fragment } from "react";
 import ContextRegister from "./ContextRegister";
 
 const Register = () => {
   const context = useContext(ContextRegister);
-  const {
-    submitButton,
-    FullName,
-    fullNameInput,
-    Email,
-    Password,
-    emailInput,
-    passwordInput,
-  } = context;
 
   return (
     <Fragment>
@@ -22,7 +14,7 @@ const Register = () => {
           </header>
 
           <div className='form-layer'>
-            <form onSubmit={submitButton}>
+            <form onSubmit={context.submitButton}>
               <div className='input-group'>
                 <span className='input-group-addon' id='username'>
                   <i className='zmdi zmdi-account'></i>
@@ -32,8 +24,8 @@ const Register = () => {
                   className='form-control'
                   placeholder='نام و نام خانوادگی'
                   aria-describedby='username'
-                  value={FullName}
-                  onChange={fullNameInput}
+                  value={context.FullName}
+                  onChange={context.fullNameInput}
                 />
               </div>
 
@@ -46,8 +38,8 @@ const Register = () => {
                   className='form-control'
                   placeholder='ایمیل'
                   aria-describedby='Email-address'
-                  value={Email}
-                  onChange={emailInput}
+                  value={context.Email}
+                  onChange={context.emailInput}
                 />
               </div>
 
@@ -60,8 +52,8 @@ const Register = () => {
                   className='form-control'
                   placeholder='رمز عبور '
                   aria-describedby='Password'
-                  value={Password}
-                  onChange={passwordInput}
+                  value={context.Password}
+                  onChange={context.passwordInput}
                 />
               </div>
 

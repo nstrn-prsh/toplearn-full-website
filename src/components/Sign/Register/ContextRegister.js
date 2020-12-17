@@ -1,3 +1,4 @@
+// context api for register
 import { createContext } from "react";
 
 const ContextRegister = createContext({
