@@ -3,7 +3,14 @@ import ContextApi from "./../../../containers/ContextApi";
 
 const Login = () => {
   const context = useContext(ContextApi);
-
+  const {
+    submitBtn,
+    email,
+    emailIn,
+    password,
+    passwordIn,
+    validator,
+  } = context;
   return (
     <Fragment>
       <main className='client-page'>
@@ -13,7 +20,7 @@ const Login = () => {
           </header>
 
           <div className='form-layer'>
-            <form onSubmit={context.submitBtn}>
+            <form onSubmit={submitBtn}>
               <div className='input-group'>
                 <span className='input-group-addon' id='email-address'>
                   <i className='zmdi zmdi-email'></i>
@@ -21,11 +28,13 @@ const Login = () => {
                 <input
                   type='email'
                   className='form-control'
+                  name='emailLog'
                   placeholder='ایمیل'
                   aria-describedby='email-address'
-                  value={context.Email}
-                  onChange={context.emailInput}
+                  value={email}
+                  onChange={emailIn}
                 />
+                {validator.current.message("emailLog", email, "required|email")}
               </div>
 
               <div className='input-group'>
@@ -35,16 +44,22 @@ const Login = () => {
                 <input
                   type='password'
                   className='form-control'
+                  name='passwordLog'
                   placeholder='رمز عبور '
                   aria-describedby='password'
-                  value={context.Password}
-                  onChange={context.passwordInput}
+                  value={password}
+                  onChange={passwordIn}
                 />
+                {validator.current.message(
+                  "passwordLog",
+                  password,
+                  "required|min:5"
+                )}
               </div>
 
               <div className='remember-me'>
                 <label>
-                  <input type='checkbox' name='' /> مرا بخاطر بسپار{" "}
+                  <input type='checkbox' name='checkLog' /> مرا بخاطر بسپار{" "}
                 </label>
               </div>
 

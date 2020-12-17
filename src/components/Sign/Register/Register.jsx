@@ -4,6 +4,18 @@ import ContextApi from "../../../containers/ContextApi";
 
 const Register = () => {
   const context = useContext(ContextApi);
+  const {
+    validator,
+    submitButton,
+    fullname,
+    fullNameInput,
+    email,
+    emailInput,
+    password,
+    passwordInput,
+    policy,
+    policyCheck,
+  } = context;
 
   return (
     <Fragment>
@@ -14,7 +26,7 @@ const Register = () => {
           </header>
 
           <div className='form-layer'>
-            <form onSubmit={context.submitButton}>
+            <form onSubmit={submitButton}>
               <div className='input-group'>
                 <span className='input-group-addon' id='username'>
                   <i className='zmdi zmdi-account'></i>
@@ -22,11 +34,17 @@ const Register = () => {
                 <input
                   type='text'
                   className='form-control'
+                  name='fullnameReg'
                   placeholder='نام و نام خانوادگی'
                   aria-describedby='username'
-                  value={context.FullName}
-                  onChange={context.fullNameInput}
+                  value={fullname}
+                  onChange={fullNameInput}
                 />
+                {validator.current.message(
+                  "fullnameReg",
+                  fullname,
+                  "required|min:5"
+                )}
               </div>
 
               <div className='input-group'>
@@ -36,11 +54,13 @@ const Register = () => {
                 <input
                   type='email'
                   className='form-control'
+                  name='emailReg'
                   placeholder='ایمیل'
                   aria-describedby='Email-address'
-                  value={context.Email}
-                  onChange={context.emailInput}
+                  value={email}
+                  onChange={emailInput}
                 />
+                {validator.current.message("emailReg", email, "required|email")}
               </div>
 
               <div className='input-group'>
@@ -50,18 +70,34 @@ const Register = () => {
                 <input
                   type='password'
                   className='form-control'
+                  name='passwordReg'
                   placeholder='رمز عبور '
                   aria-describedby='Password'
-                  value={context.Password}
-                  onChange={context.passwordInput}
+                  value={password}
+                  onChange={passwordInput}
                 />
+                {validator.current.message(
+                  "passwordReg",
+                  password,
+                  "required|min:5"
+                )}
               </div>
 
               <div className='accept-rules'>
                 <label>
-                  <input type='checkbox' name='' /> قوانین و مقررات سایت را
-                  میپذیرم{" "}
+                  <input
+                    type='checkbox'
+                    name='policyReg'
+                    value={policy}
+                    onChange={policyCheck}
+                  />{" "}
+                  قوانین و مقررات سایت را میپذیرم{" "}
                 </label>
+                {validator.current.message(
+                  "policyReg",
+                  policy,
+                  "required"
+                )}
               </div>
 
               <div className='link'>

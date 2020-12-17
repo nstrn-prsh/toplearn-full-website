@@ -1,18 +1,24 @@
 import { createContext } from "react";
 
 const ContextApi = createContext({
+  // sign
+  fullname: "",
+  email: "",
+  password: "",
+  validator: () => {},
   // register
-  FullName: "",
-  Email: "",
-  Password: "",
+  policy: undefined, // ?
   resetState: () => {},
   submitButton: () => {},
   fullNameInput: () => {},
   emailInput: () => {},
   passwordInput: () => {},
+  policyCheck: () => {},
   // login
+  resetIn: () => {},
   submitBtn: () => {},
-  resetInput: () => {},
+  emailIn: () => {},
+  passwordIn: () => {},
 });
 
 export default ContextApi;
