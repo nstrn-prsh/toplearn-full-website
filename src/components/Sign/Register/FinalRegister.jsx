@@ -1,14 +1,14 @@
 // final register file -- use this
 import React from "react";
-import GlobalRegister from './GlobalRegister';
-import Register from './Register';
+import GlobalRegister from "./GlobalRegister";
+import Register from "./Register";
 
 const FinalRegister = () => {
-    return (  
-        <GlobalRegister>
-        <Register/>    
-        </GlobalRegister>
-    );
-}
- 
+  return (
+    <GlobalRegister>
+      <Register />
+    </GlobalRegister>
+  );
+};
+
 export default FinalRegister;

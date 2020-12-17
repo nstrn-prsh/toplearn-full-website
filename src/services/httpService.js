@@ -6,6 +6,12 @@ import { toast } from "react-toastify";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 // javabi ke az samte server miado tahlil mikone
+/*
+    200 : ok
+    201 : created
+    202 : accepted
+    218 : this is fine
+    */
 axios.interceptors.response.use(null, (error) => {
 
   const expectedErrors =

@@ -1,9 +1,9 @@
 // we use functions here with jsx
 import React, { useContext, Fragment } from "react";
-import ContextRegister from "./ContextRegister";
+import ContextApi from "../../../containers/ContextApi";
 
 const Register = () => {
-  const context = useContext(ContextRegister);
+  const context = useContext(ContextApi);
 
   return (
     <Fragment>

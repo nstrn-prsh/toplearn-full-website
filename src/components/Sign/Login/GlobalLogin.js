@@ -3,40 +3,36 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import ContextApi from "./../../../containers/ContextApi";
-import { registerAxios } from "./../../../services/userService";
+import { loginAxios } from "./../../../services/userService";
 
-/* nokte : *********************************** 
-esme getter va setter ha az tarafe server miad 
-ps ma nemitonim be delkhah esm bezarim barash */
-const GlobalRegister = (props) => {
-  const [fullname, setFullname] = useState("");
+const GlobalLogin = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const resetState = () => {
-    setFullname("");
+  const resetInput = () => {
     setEmail("");
     setPassword("");
   };
 
-  const submitButton = async (event) => {
+  const submitBtn = async (event) => {
     event.preventDefault();
     const user = {
-      fullname,
       email,
       password,
     };
-    // alert(`${fullname} در حال ثبت نام...`);
 
     try {
-      const { status, data } = await registerAxios(user);
-      if (status === 201) {
+      const { status, data } = await loginAxios(user);
+      if (status === 200) {
         toast.success("با موفقیت انجام شد.", {
           position: "top-center",
           closeOnClick: true,
         });
         console.log(data);
-        resetState();
+        localStorage.setItem("token", data.token);
+        // redirect user to page after login
+        props.history.replace("/");
+        resetInput();
       }
     } catch (error) {
       console.log(error);
@@ -46,9 +42,7 @@ const GlobalRegister = (props) => {
       });
     }
   };
-  const fullNameInput = (event) => {
-    setFullname(event.target.value);
-  };
+
   const emailInput = (event) => {
     setEmail(event.target.value);
   };
@@ -59,12 +53,10 @@ const GlobalRegister = (props) => {
   return (
     <ContextApi.Provider
       value={{
-        FullName: fullname,
         Email: email,
         Password: password,
-        resetState: resetState,
-        submitButton: submitButton,
-        fullNameInput: fullNameInput,
+        resetInput: resetInput,
+        submitBtn: submitBtn,
         emailInput: emailInput,
         passwordInput: passwordInput,
       }}
@@ -74,4 +66,4 @@ const GlobalRegister = (props) => {
   );
 };
 
-export default GlobalRegister;
+export default GlobalLogin;

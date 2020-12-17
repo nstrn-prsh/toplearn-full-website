@@ -1,7 +1,7 @@
-// context api for register
 import { createContext } from "react";
 
-const ContextRegister = createContext({
+const ContextApi = createContext({
+  // register
   FullName: "",
   Email: "",
   Password: "",
@@ -10,6 +10,9 @@ const ContextRegister = createContext({
   fullNameInput: () => {},
   emailInput: () => {},
   passwordInput: () => {},
+  // login
+  submitBtn: () => {},
+  resetInput: () => {},
 });
 
-export default ContextRegister;
+export default ContextApi;

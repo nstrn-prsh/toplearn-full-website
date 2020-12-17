@@ -1,6 +1,9 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
+import ContextApi from "./../../../containers/ContextApi";
 
 const Login = () => {
+  const context = useContext(ContextApi);
+
   return (
     <Fragment>
       <main className='client-page'>
@@ -10,16 +13,18 @@ const Login = () => {
           </header>
 
           <div className='form-layer'>
-            <form action='' method=''>
+            <form onSubmit={context.submitBtn}>
               <div className='input-group'>
                 <span className='input-group-addon' id='email-address'>
                   <i className='zmdi zmdi-email'></i>
                 </span>
                 <input
-                  type='text'
+                  type='email'
                   className='form-control'
                   placeholder='ایمیل'
                   aria-describedby='email-address'
+                  value={context.Email}
+                  onChange={context.emailInput}
                 />
               </div>
 
@@ -28,10 +33,12 @@ const Login = () => {
                   <i className='zmdi zmdi-lock'></i>
                 </span>
                 <input
-                  type='text'
+                  type='password'
                   className='form-control'
                   placeholder='رمز عبور '
                   aria-describedby='password'
+                  value={context.Password}
+                  onChange={context.passwordInput}
                 />
               </div>
 
@@ -44,8 +51,8 @@ const Login = () => {
               <div className='link'>
                 <a href='google.com'>
                   {" "}
-                  <i className='zmdi zmdi-lock'></i> رمز عبور خود را فراموش کرده ام
-                  !
+                  <i className='zmdi zmdi-lock'></i> رمز عبور خود را فراموش کرده
+                  ام !
                 </a>
                 <a href='google.com'>
                   {" "}
