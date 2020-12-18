@@ -5,10 +5,10 @@ const Header = () => {
     <Fragment>
       <header>
         <a href='google.com' className='logo'>
-          <img src='images/logo.png' alt="tl" />
+          <img src='images/logo.png' alt='tl' />
         </a>
         <h1> با اساتید مجرب و کارآزموده در خودآموز تاپ لرن </h1>
-        <h2> آموزش ببینید ، تجربه کسب کنید و بازار کار شوید </h2>
+        <h2> آموزش ببینید ، تجربه کسب کنید و وارد بازار کار شوید </h2>
         <h3> با کمترین هزینه خودت یاد بگیر </h3>
       </header>
       <div className='search-form'>

@@ -1,9 +1,15 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const Archive = () => {
   return (
     <Fragment>
+      <Helmet>
+        <meta charSet='utf-8' />
+        <title>تاپلرن|لیست دوره ها</title>
+      </Helmet>
+
       <div className='container'>
         <section className='term-categories'>
           <div className='top-bar'>
@@ -128,7 +134,7 @@ const Archive = () => {
                   <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col'>
                     <article>
                       <Link to='/singleCourse' className='img-layer'>
-                        <img src='images/pic/1.jpg' alt="tl" />
+                        <img src='images/pic/1.jpg' alt='tl' />
                       </Link>
                       <h2>
                         <Link to='/singleCourse'>
@@ -144,7 +150,7 @@ const Archive = () => {
                   <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col'>
                     <article>
                       <Link to='/singleCourse' className='img-layer'>
-                        <img src='images/pic/2.jpg' alt="tl" />
+                        <img src='images/pic/2.jpg' alt='tl' />
                       </Link>
                       <h2>
                         <Link to='/singleCourse'>
@@ -160,7 +166,7 @@ const Archive = () => {
                   <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col'>
                     <article>
                       <Link to='/singleCourse' className='img-layer'>
-                        <img src='images/pic/3.jpg' alt="tl" />
+                        <img src='images/pic/3.jpg' alt='tl' />
                       </Link>
                       <h2>
                         <Link to='/singleCourse'>
@@ -176,7 +182,7 @@ const Archive = () => {
                   <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col'>
                     <article>
                       <Link to='/singleCourse' className='img-layer'>
-                        <img src='images/pic/4.jpg' alt="tl" />
+                        <img src='images/pic/4.jpg' alt='tl' />
                       </Link>
                       <h2>
                         <Link to='/singleCourse'>
@@ -192,7 +198,7 @@ const Archive = () => {
                   <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col'>
                     <article>
                       <Link to='/singleCourse' className='img-layer'>
-                        <img src='images/pic/5.jpg' alt="tl" />
+                        <img src='images/pic/5.jpg' alt='tl' />
                       </Link>
                       <h2>
                         <Link to='/singleCourse'>
@@ -208,7 +214,7 @@ const Archive = () => {
                   <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col'>
                     <article>
                       <Link to='/singleCourse' className='img-layer'>
-                        <img src='images/pic/6.jpg' alt="tl" />
+                        <img src='images/pic/6.jpg' alt='tl' />
                       </Link>
                       <h2>
                         <Link to='/singleCourse'>
@@ -224,7 +230,7 @@ const Archive = () => {
                   <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col'>
                     <article>
                       <Link to='/singleCourse' className='img-layer'>
-                        <img src='images/pic/7.jpg' alt="tl" />
+                        <img src='images/pic/7.jpg' alt='tl' />
                       </Link>
                       <h2>
                         <Link to='/singleCourse'>
@@ -240,7 +246,7 @@ const Archive = () => {
                   <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col'>
                     <article>
                       <Link to='/singleCourse' className='img-layer'>
-                        <img src='images/pic/8.jpg' alt="tl" />
+                        <img src='images/pic/8.jpg' alt='tl' />
                       </Link>
                       <h2>
                         <Link to='/singleCourse'>
@@ -256,7 +262,7 @@ const Archive = () => {
                   <div className='col-lg-4 col-md-4 col-sm-6 col-xs-12 term-col'>
                     <article>
                       <Link to='/singleCourse' className='img-layer'>
-                        <img src='images/pic/4.jpg' alt="tl" />
+                        <img src='images/pic/4.jpg' alt='tl' />
                       </Link>
                       <h2>
                         <Link to='/singleCourse'>

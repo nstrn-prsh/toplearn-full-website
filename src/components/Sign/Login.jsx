@@ -2,13 +2,14 @@ import React, { Fragment, useState, useRef } from "react";
 import SimpleReactValidator from "simple-react-validator";
 import { withRouter } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Sugar } from "react-preloaders";
-import {loginAxios} from './../../services/userService'
+import { Helmet } from "react-helmet";
+import { loginAxios } from "./../../services/userService";
+// import { Sugar } from "react-preloaders";
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [, forceUpdate] = useState();
 
   const validator = useRef(
@@ -33,7 +34,7 @@ const Login = ({ history }) => {
 
     try {
       if (validator.current.allValid()) {
-        setLoading(true);
+        // setLoading(true);
         const { status, data } = await loginAxios(user);
         if (status === 200) {
           toast.success("با موفقیت انجام شد.", {
@@ -41,7 +42,7 @@ const Login = ({ history }) => {
             closeOnClick: true,
           });
           localStorage.setItem("token", data.token);
-          setLoading(false);
+          // setLoading(false);
           // redirect user to page after login
           history.replace("/");
           resetIn();
@@ -53,7 +54,7 @@ const Login = ({ history }) => {
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      // setLoading(false);
       toast.error("مشکلی پیش آمده.", {
         position: "top-center",
         closeOnClick: true,
@@ -74,13 +75,18 @@ const Login = ({ history }) => {
     <Fragment>
       <main className='client-page'>
         <div className='container-content'>
+          <Helmet>
+            <meta charSet='utf-8' />
+            <title>تاپلرن|ورود به صفحه شخصی</title>
+          </Helmet>
+          
           <header>
             <h2> ورود به سایت </h2>
           </header>
 
-          {loading ? (
+          {/* {loading ? (
             <Sugar customLoading={loading} time={0} color="#097938" />
-          ) : null}
+          ) : null} */}
 
           <div className='form-layer'>
             <form onSubmit={submitBtn}>

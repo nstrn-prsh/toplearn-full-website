@@ -1,14 +1,19 @@
 import React, { Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import TopNav from './../components/Common/TopNav';
-import Header from './../components/Course/Header';
-import MainNav from './../components/Common/MainNav';
-import Footer from './../components/Common/Footer';
+import { Helmet } from "react-helmet";
+import TopNav from "./../components/Common/TopNav";
+import Header from "./../components/Course/Header";
+import MainNav from "./../components/Common/MainNav";
+import Footer from "./../components/Common/Footer";
 
 const MainLayout = (props) => {
   return (
     <Fragment>
+      <Helmet>
+        <meta charSet='utf-8' />
+        <title>خودآموز تاپلرن</title>
+      </Helmet>
       <div className='landing-layer'>
         <div className='container'>
           <TopNav />
@@ -20,7 +25,7 @@ const MainLayout = (props) => {
         <div className='container'>{props.children}</div>
       </main>
       <Footer />
-      <ToastContainer/>
+      <ToastContainer />
     </Fragment>
   );
 };

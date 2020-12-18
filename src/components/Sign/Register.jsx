@@ -1,9 +1,9 @@
 import React, { useState, useRef, Fragment } from "react";
 import { toast } from "react-toastify";
 import SimpleReactValidator from "simple-react-validator";
-import { withRouter } from "react-router-dom";
-import { Sugar } from "react-preloaders";
+import { Helmet } from "react-helmet";
 import { registerAxios } from "./../../services/userService";
+// import { Sugar } from "react-preloaders";
 
 const Register = ({ history }) => {
   /* nokte : *********************************** 
@@ -13,7 +13,7 @@ ps ma nemitonim be delkhah esm bezarim barash */
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [policy, setPolicy] = useState();
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [, forceUpdate] = useState();
 
   const validator = useRef(
@@ -35,32 +35,27 @@ ps ma nemitonim be delkhah esm bezarim barash */
 
   const submitButton = async (event) => {
     event.preventDefault();
-    const user = {
-      fullname,
-      email,
-      password,
-    };
+    const user = { fullname, email, password };
 
     try {
       if (validator.current.allValid()) {
-        setLoading(true);
-        const { status, data } = await registerAxios(user);
+        // setLoading(true);
+        const { status } = await registerAxios(user);
         if (status === 201) {
           toast.success("با موفقیت انجام شد.", {
             position: "top-center",
             closeOnClick: true,
           });
-          setLoading(false);
+          // setLoading(false);
           history.push("/login");
           resetState();
-          console.log(data);
         } else {
           validator.current.showMessages();
           forceUpdate(1);
         }
       }
     } catch (error) {
-      setLoading(false);
+      // setLoading(false);
       toast.error("مشکلی پیش آمده.", {
         position: "top-center",
         closeOnClick: true,
@@ -90,13 +85,18 @@ ps ma nemitonim be delkhah esm bezarim barash */
     <Fragment>
       <main className='client-page'>
         <div className='container-content'>
+          <Helmet>
+            <meta charSet='utf-8' />
+            <title>تاپلرن|عضویت در سایت</title>
+          </Helmet>
+
           <header>
             <h2> عضویت در سایت </h2>
           </header>
 
-          {loading ? (
+          {/* {loading ? (
             <Sugar customLoading={loading} time={0} color='#097938' />
-          ) : null}
+          ) : null} */}
 
           <div className='form-layer'>
             <form onSubmit={submitButton}>
@@ -137,7 +137,7 @@ ps ma nemitonim be delkhah esm bezarim barash */
               </div>
 
               <div className='input-group'>
-                <span className='input-group-addon' id='Password'>
+                <span className='input-group-addon' id='password'>
                   <i className='zmdi zmdi-lock'></i>
                 </span>
                 <input
@@ -145,7 +145,7 @@ ps ma nemitonim be delkhah esm bezarim barash */
                   name='passwordReg'
                   className='form-control'
                   placeholder='رمز عبور '
-                  aria-describedby='Password'
+                  aria-describedby='password'
                   value={password}
                   onChange={passwordInput}
                 />
@@ -190,4 +190,4 @@ ps ma nemitonim be delkhah esm bezarim barash */
   );
 };
 
-export default withRouter(Register);
+export default Register;
