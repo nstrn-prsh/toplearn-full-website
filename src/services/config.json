@@ -1,4 +1,4 @@
 {
-    "toplearnapi" : "https://toplearnapi.ghorbany.dev",
-    "localapi" : "http://localhost:3003"
+    "toplearnapi": "https://toplearnapi.ghorbany.dev",
+    "localapi": "localhost:3003"
 }

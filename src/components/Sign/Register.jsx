@@ -1,23 +1,90 @@
-// we use functions here with jsx
-import React, { useContext, Fragment } from "react";
+import React, { useState, useRef, Fragment } from "react";
+import { toast } from "react-toastify";
+import SimpleReactValidator from "simple-react-validator";
+import { withRouter } from "react-router-dom";
 import { Sugar } from "react-preloaders";
-import ContextApi from "../../../containers/ContextApi";
+import { registerAxios } from "./../../services/userService";
 
-const Register = () => {
-  const context = useContext(ContextApi);
-  const {
-    loading,
-    validator,
-    submitButton,
-    fullname,
-    fullNameInput,
-    email,
-    emailInput,
-    password,
-    passwordInput,
-    policy,
-    policyCheck,
-  } = context;
+const Register = ({ history }) => {
+  /* nokte : *********************************** 
+esme getter va setter ha az tarafe server miad 
+ps ma nemitonim be delkhah esm bezarim barash */
+  const [fullname, setFullname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [policy, setPolicy] = useState();
+  const [loading, setLoading] = useState(false);
+  const [, forceUpdate] = useState();
+
+  const validator = useRef(
+    new SimpleReactValidator({
+      messages: {
+        required: "پر کردن این قسمت الزامی است.",
+        min: "حداقل باید 5 کاراکتر باشد!",
+        email: "ایمیل وارد شده صحیح نمیباشد",
+      },
+      element: (message) => <div style={{ color: "red" }}>{message}</div>,
+    })
+  );
+
+  const resetState = () => {
+    setFullname("");
+    setEmail("");
+    setPassword("");
+  };
+
+  const submitButton = async (event) => {
+    event.preventDefault();
+    const user = {
+      fullname,
+      email,
+      password,
+    };
+
+    try {
+      if (validator.current.allValid()) {
+        setLoading(true);
+        const { status, data } = await registerAxios(user);
+        if (status === 201) {
+          toast.success("با موفقیت انجام شد.", {
+            position: "top-center",
+            closeOnClick: true,
+          });
+          setLoading(false);
+          history.push("/login");
+          resetState();
+          console.log(data);
+        } else {
+          validator.current.showMessages();
+          forceUpdate(1);
+        }
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error("مشکلی پیش آمده.", {
+        position: "top-center",
+        closeOnClick: true,
+      });
+      console.log(error);
+    }
+  };
+
+  const fullNameInput = (event) => {
+    setFullname(event.target.value);
+    validator.current.showMessageFor("fullnameReg");
+  };
+  const emailInput = (event) => {
+    setEmail(event.target.value);
+    validator.current.showMessageFor("emailReg");
+  };
+  const passwordInput = (event) => {
+    setPassword(event.target.value);
+    validator.current.showMessageFor("passwordReg");
+  };
+  const policyCheck = (event) => {
+    setPolicy(event.currentTarget.checked);
+    validator.current.showMessageFor("policyReg");
+  };
 
   return (
     <Fragment>
@@ -28,11 +95,7 @@ const Register = () => {
           </header>
 
           {loading ? (
-            <Sugar
-              customLoading={loading}
-              time={0}
-              color={"#097938"}
-            />
+            <Sugar customLoading={loading} time={0} color='#097938' />
           ) : null}
 
           <div className='form-layer'>
@@ -43,8 +106,8 @@ const Register = () => {
                 </span>
                 <input
                   type='text'
-                  className='form-control'
                   name='fullnameReg'
+                  className='form-control'
                   placeholder='نام و نام خانوادگی'
                   aria-describedby='username'
                   value={fullname}
@@ -63,10 +126,10 @@ const Register = () => {
                 </span>
                 <input
                   type='email'
-                  className='form-control'
                   name='emailReg'
+                  className='form-control'
                   placeholder='ایمیل'
-                  aria-describedby='Email-address'
+                  aria-describedby='email-address'
                   value={email}
                   onChange={emailInput}
                 />
@@ -79,8 +142,8 @@ const Register = () => {
                 </span>
                 <input
                   type='password'
-                  className='form-control'
                   name='passwordReg'
+                  className='form-control'
                   placeholder='رمز عبور '
                   aria-describedby='Password'
                   value={password}
@@ -103,11 +166,7 @@ const Register = () => {
                   />{" "}
                   قوانین و مقررات سایت را میپذیرم{" "}
                 </label>
-                {validator.current.message(
-                  "policyReg",
-                  policy,
-                  "required"
-                )}
+                {validator.current.message("policyReg", policy, "required")}
               </div>
 
               <div className='link'>
@@ -131,4 +190,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default withRouter(Register);

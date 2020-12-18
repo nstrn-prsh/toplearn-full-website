@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
 import { withRouter } from "react-router-dom";
-import TopNav from "../components/Common/TopNav";
-import Footer from "../components/Common/Footer";
-import Header from "./../components/Course/Header";
-import MainNav from "./../components/Common/MainNav";
 import { ToastContainer } from "react-toastify";
+import TopNav from './../components/Common/TopNav';
+import Header from './../components/Course/Header';
+import MainNav from './../components/Common/MainNav';
+import Footer from './../components/Common/Footer';
 
 const MainLayout = (props) => {
   return (

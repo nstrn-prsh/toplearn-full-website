@@ -1,18 +1,75 @@
-import React, { Fragment, useContext } from "react";
+import React, { Fragment, useState, useRef } from "react";
+import SimpleReactValidator from "simple-react-validator";
+import { withRouter } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Sugar } from "react-preloaders";
-import ContextApi from "./../../../containers/ContextApi";
+import {loginAxios} from './../../services/userService'
 
-const Login = () => {
-  const context = useContext(ContextApi);
-  const {
-    loading,
-    submitBtn,
-    email,
-    emailIn,
-    password,
-    passwordIn,
-    validator,
-  } = context;
+const Login = ({ history }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [, forceUpdate] = useState();
+
+  const validator = useRef(
+    new SimpleReactValidator({
+      messages: {
+        required: "پر کردن این قسمت الزامی است.",
+        min: "حداقل باید 5 کاراکتر باشد!",
+        email: "ایمیل وارد شده صحیح نمیباشد",
+      },
+      element: (message) => <div style={{ color: "red" }}>{message}</div>,
+    })
+  );
+
+  const resetIn = () => {
+    setEmail("");
+    setPassword("");
+  };
+
+  const submitBtn = async (event) => {
+    event.preventDefault();
+    const user = { email, password };
+
+    try {
+      if (validator.current.allValid()) {
+        setLoading(true);
+        const { status, data } = await loginAxios(user);
+        if (status === 200) {
+          toast.success("با موفقیت انجام شد.", {
+            position: "top-center",
+            closeOnClick: true,
+          });
+          localStorage.setItem("token", data.token);
+          setLoading(false);
+          // redirect user to page after login
+          history.replace("/");
+          resetIn();
+          console.log(data);
+        }
+      } else {
+        validator.current.showMessages();
+        forceUpdate(1);
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      toast.error("مشکلی پیش آمده.", {
+        position: "top-center",
+        closeOnClick: true,
+      });
+    }
+  };
+
+  const emailIn = (event) => {
+    setEmail(event.target.value);
+    validator.current.showMessageFor("emailLog");
+  };
+  const passwordIn = (event) => {
+    setPassword(event.target.value);
+    validator.current.showMessageFor("passwordLog");
+  };
+
   return (
     <Fragment>
       <main className='client-page'>
@@ -22,11 +79,7 @@ const Login = () => {
           </header>
 
           {loading ? (
-            <Sugar
-              customLoading={loading}
-              time={0}
-              color={"#097938"}
-            />
+            <Sugar customLoading={loading} time={0} color="#097938" />
           ) : null}
 
           <div className='form-layer'>
@@ -37,8 +90,8 @@ const Login = () => {
                 </span>
                 <input
                   type='email'
-                  className='form-control'
                   name='emailLog'
+                  className='form-control'
                   placeholder='ایمیل'
                   aria-describedby='email-address'
                   value={email}
@@ -94,4 +147,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withRouter(Login);

@@ -35,6 +35,6 @@ axios.interceptors.response.use(null, (error) => {
 export default {
   post: axios.post,
   get: axios.get,
-  put: axios.pot,
+  put: axios.put,
   delete: axios.delete,
 };
