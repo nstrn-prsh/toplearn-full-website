@@ -3,6 +3,7 @@
 import React, { useState, useRef } from "react";
 import { toast } from "react-toastify";
 import SimpleReactValidator from "simple-react-validator";
+import { withRouter } from "react-router-dom";
 import ContextApi from "./../../../containers/ContextApi";
 import { registerAxios } from "./../../../services/userService";
 
@@ -13,6 +14,7 @@ const GlobalRegister = (props) => {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [policy, setPolicy] = useState();
   const [, forceUpdate] = useState();
 
@@ -44,6 +46,7 @@ const GlobalRegister = (props) => {
 
     try {
       if (validator.current.allValid()) {
+        setLoading(true)
         const { status, data } = await registerAxios(user);
         if (status === 201) {
           toast.success("با موفقیت انجام شد.", {
@@ -51,6 +54,8 @@ const GlobalRegister = (props) => {
             closeOnClick: true,
           });
           console.log(data);
+          setLoading(false)
+          props.history.push('/login')
           resetState();
         } else {
           validator.current.showMessages();
@@ -59,6 +64,7 @@ const GlobalRegister = (props) => {
       }
     } catch (error) {
       console.log(error);
+      setLoading(false)
       toast.error("مشکلی پیش آمده.", {
         position: "top-center",
         closeOnClick: true,
@@ -89,6 +95,7 @@ const GlobalRegister = (props) => {
         fullname,
         email,
         password,
+        loading,
         policy,
         validator,
         resetState,
@@ -104,4 +111,4 @@ const GlobalRegister = (props) => {
   );
 };
 
-export default GlobalRegister;
+export default withRouter(GlobalRegister);

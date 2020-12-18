@@ -3,12 +3,14 @@
 import React, { useState, useRef } from "react";
 import { toast } from "react-toastify";
 import SimpleReactValidator from "simple-react-validator";
+import { withRouter } from "react-router-dom";
 import ContextApi from "./../../../containers/ContextApi";
 import { loginAxios } from "./../../../services/userService";
 
 const GlobalLogin = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [, forceUpdate] = useState();
 
   const validator = useRef(
@@ -36,6 +38,7 @@ const GlobalLogin = (props) => {
 
     try {
       if (validator.current.allValid()) {
+        setLoading(true);
         const { status, data } = await loginAxios(user);
         if (status === 200) {
           toast.success("با موفقیت انجام شد.", {
@@ -44,6 +47,7 @@ const GlobalLogin = (props) => {
           });
           console.log(data);
           localStorage.setItem("token", data.token);
+          setLoading(false);
           // redirect user to page after login
           props.history.replace("/");
           resetIn();
@@ -54,6 +58,7 @@ const GlobalLogin = (props) => {
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
       toast.error("مشکلی پیش آمده.", {
         position: "top-center",
         closeOnClick: true,
@@ -75,6 +80,7 @@ const GlobalLogin = (props) => {
       value={{
         email,
         password,
+        loading,
         validator,
         resetIn,
         submitBtn,
@@ -87,4 +93,4 @@ const GlobalLogin = (props) => {
   );
 };
 
-export default GlobalLogin;
+export default withRouter(GlobalLogin);

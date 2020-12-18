@@ -1,9 +1,11 @@
 import React, { Fragment, useContext } from "react";
+import { Sugar } from "react-preloaders";
 import ContextApi from "./../../../containers/ContextApi";
 
 const Login = () => {
   const context = useContext(ContextApi);
   const {
+    loading,
     submitBtn,
     email,
     emailIn,
@@ -18,6 +20,14 @@ const Login = () => {
           <header>
             <h2> ورود به سایت </h2>
           </header>
+
+          {loading ? (
+            <Sugar
+              customLoading={loading}
+              time={0}
+              color={"#097938"}
+            />
+          ) : null}
 
           <div className='form-layer'>
             <form onSubmit={submitBtn}>

@@ -5,17 +5,16 @@ const ContextApi = createContext({
   fullname: "",
   email: "",
   password: "",
+  loading: false, // ?
   validator: () => {},
   // register
   policy: undefined, // ?
-  resetState: () => {},
   submitButton: () => {},
   fullNameInput: () => {},
   emailInput: () => {},
   passwordInput: () => {},
   policyCheck: () => {},
   // login
-  resetIn: () => {},
   submitBtn: () => {},
   emailIn: () => {},
   passwordIn: () => {},
