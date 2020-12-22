@@ -1,14 +1,20 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+import { paginate } from "./../utils/paginate";
 import Register from "./../components/Sign/Register";
 import Login from "./../components/Sign/Login";
-import MainLayout from './../layouts/MainLayout'
-import Archive from './../components/Course/Archive';
-import SingleCourse from './../components/Course/SingleCourse';
-import Courses from './../components/Course/Courses';
-
+import MainLayout from "./../layouts/MainLayout";
+import Archive from "./../components/Course/Archive";
+import SingleCourse from "./../components/Course/SingleCourse";
+import Courses from "./../components/Course/Courses";
 
 const Project = (props) => {
+  const courseS = useSelector((state) => state.courses);
+  // toye currentPage ke mishe safhe 1 ma faghat 8 ta course mikhaiim namayesh bedim
+  const courseIndex = paginate(courseS, 1, 8);
+  
   return (
     <MainLayout>
       <Switch>
@@ -16,7 +22,11 @@ const Project = (props) => {
         <Route path='/register' component={Register} />
         <Route path='/archive' component={Archive} />
         <Route path='/singleCourse' component={SingleCourse} />
-        <Route path='/' exact component={Courses} />
+        <Route
+          path='/'
+          exact
+          render={() => <Courses someCourses={courseIndex} />}
+        />
       </Switch>
     </MainLayout>
   );
