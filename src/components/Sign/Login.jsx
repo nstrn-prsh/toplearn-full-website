@@ -79,14 +79,12 @@ const Login = ({ history }) => {
             <meta charSet='utf-8' />
             <title>تاپلرن|ورود به صفحه شخصی</title>
           </Helmet>
-          
+
           <header>
             <h2> ورود به سایت </h2>
           </header>
 
-          {/* {loading ? (
-            <Sugar customLoading={loading} time={0} color="#097938" />
-          ) : null} */}
+          {/* <Sugar customLoading={loading} time={0} color='#097938' /> */}
 
           <div className='form-layer'>
             <form onSubmit={submitBtn}>

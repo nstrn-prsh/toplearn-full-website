@@ -94,9 +94,7 @@ ps ma nemitonim be delkhah esm bezarim barash */
             <h2> عضویت در سایت </h2>
           </header>
 
-          {/* {loading ? (
-            <Sugar customLoading={loading} time={0} color='#097938' />
-          ) : null} */}
+          {/* <Sugar customLoading={loading} time={0} color='#097938' /> */}
 
           <div className='form-layer'>
             <form onSubmit={submitButton}>
