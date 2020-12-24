@@ -21,7 +21,8 @@ const Project = (props) => {
         <Route path='/login' component={Login} />
         <Route path='/register' component={Register} />
         <Route path='/archive' component={Archive} />
-        <Route path='/singleCourse' component={SingleCourse} />
+        {/* e18.5: */}
+        <Route path='/singleCourse/:id' component={SingleCourse} />
         <Route
           path='/'
           exact

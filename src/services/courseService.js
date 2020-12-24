@@ -1,8 +1,12 @@
 import config from "./config.json";
 import http from "./httpService";
 
-export const courseAxios = () => {
+export const coursesAxios = () => {
   return http.get(`${config.toplearnapi}/api/courses`);
+};
+
+export const courseAxios = ({courseId}) => {
+  return http.get(`${config.toplearnapi}/api/course/${courseId}`);
 };
 
 /*

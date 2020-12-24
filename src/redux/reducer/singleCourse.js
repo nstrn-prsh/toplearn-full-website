@@ -4,7 +4,7 @@
 export const singleCoursesReducer = (state = {}, action) => {
   switch (action.type) {
     // daryafte dore az server
-    case "GET_COURSE":
+    case "GET_SINGLE_COURSE":
       return { ...action.payload };
     default:
       return state;
