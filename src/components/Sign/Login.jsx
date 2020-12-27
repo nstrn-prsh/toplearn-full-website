@@ -3,10 +3,15 @@ import SimpleReactValidator from "simple-react-validator";
 import { withRouter } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet";
+import { useDispatch } from "react-redux";
 import { loginAxios } from "./../../services/userService";
 // import { Sugar } from "react-preloaders";
+import { addUser } from "./../../redux/action/user";
+import { decodeToken } from "./../../utils/decodeToken";
 
 const Login = ({ history }) => {
+  const dispatch = useDispatch();
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // const [loading, setLoading] = useState(false);
@@ -42,6 +47,7 @@ const Login = ({ history }) => {
             closeOnClick: true,
           });
           localStorage.setItem("token", data.token);
+          dispatch(addUser(decodeToken(data.token).payload.user)); //e18.6
           // setLoading(false);
           // redirect user to page after login
           history.replace("/");
