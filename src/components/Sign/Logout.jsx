@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import {withRouter} from 'react-router-dom';
 import { clearUser } from "../../redux/action/user";
 
 const Logout = ({ history }) => {
@@ -13,4 +14,4 @@ const Logout = ({ history }) => {
   return null;
 };
 
-export default Logout;
+export default withRouter(Logout);

@@ -1,17 +1,20 @@
 import React, { Fragment, useState, useRef } from "react";
 import SimpleReactValidator from "simple-react-validator";
-import { withRouter } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { loginAxios } from "./../../services/userService";
 // import { Sugar } from "react-preloaders";
 import { addUser } from "./../../redux/action/user";
 import { decodeToken } from "./../../utils/decodeToken";
+import { isEmpty } from "lodash";
 
 const Login = ({ history }) => {
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // const [loading, setLoading] = useState(false);
@@ -76,6 +79,9 @@ const Login = ({ history }) => {
     setPassword(event.target.value);
     validator.current.showMessageFor("passwordLog");
   };
+
+  // vaghti karbar login mishe dg nabayad be safhe login dastresi dashte bashe
+  if (!isEmpty(user)) return <Redirect to='/' />;
 
   return (
     <Fragment>

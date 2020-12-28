@@ -5,6 +5,12 @@ import { toast } from "react-toastify";
 // pishfarz header baraye post
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
+// e18.7
+// common yani baraye hameye heder ha key ehraze hoviyat ro set kon
+// nokte: hame az key Authorization estefade mikonan
+const token = localStorage.getItem("token");
+if (token) axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
+
 // javabi ke az samte server miado tahlil mikone
 /*
     200 : ok
@@ -13,7 +19,6 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
     218 : this is fine
     */
 axios.interceptors.response.use(null, (error) => {
-
   const expectedErrors =
     error.response &&
     error.response.status >= 400 &&
@@ -27,7 +32,7 @@ axios.interceptors.response.use(null, (error) => {
       closeOnClick: true,
     });
   }
-  
+
   return Promise.reject(error);
 });
 

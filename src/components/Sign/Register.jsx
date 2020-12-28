@@ -2,10 +2,14 @@ import React, { useState, useRef, Fragment } from "react";
 import { toast } from "react-toastify";
 import SimpleReactValidator from "simple-react-validator";
 import { Helmet } from "react-helmet";
+import { Redirect } from "react-router";
+import { useSelector } from "react-redux";
 import { registerAxios } from "./../../services/userService";
 // import { Sugar } from "react-preloaders";
+import { isEmpty } from "lodash";
 
 const Register = ({ history }) => {
+  const user = useSelector((state) => state.user);
   /* nokte : *********************************** 
 esme getter va setter ha az tarafe server miad 
 ps ma nemitonim be delkhah esm bezarim barash */
@@ -80,6 +84,8 @@ ps ma nemitonim be delkhah esm bezarim barash */
     setPolicy(event.currentTarget.checked);
     validator.current.showMessageFor("policyReg");
   };
+
+  if (isEmpty(user)) <Redirect to='/' />;
 
   return (
     <Fragment>
