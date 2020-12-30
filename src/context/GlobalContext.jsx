@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import ReactValidator from "simple-react-validator";
 import { withRouter } from "react-router";
 import { useDispatch } from "react-redux";
+import { showLoading, hideLoading } from "react-redux-loading-bar";
 import { loginAxios, registerAxios } from "./../services/userService";
 import { toastSuccess, toastError } from "./../utils/toastMsg";
 import { addUser } from "./../redux/action/user";
@@ -43,9 +44,11 @@ const GlobalContext = ({ history, children }) => {
 
     try {
       if (validator.current.allValid()) {
+        dispatch(showLoading("serverBar"));
         const { status, data } = await loginAxios(user);
         if (status === 200) {
           toastSuccess("با موفقیت انجام شد.");
+          dispatch(hideLoading("serverBar"));
           localStorage.setItem("token", data.token);
           dispatch(addUser(decodeToken(data.token).payload.user)); //e18.6
           // redirect user to page after login
@@ -60,6 +63,7 @@ const GlobalContext = ({ history, children }) => {
     } catch (error) {
       console.log(error);
       toastError("مشکلی پیش آمده.");
+      dispatch(hideLoading("serverBar"));
     }
   };
 
@@ -70,9 +74,11 @@ const GlobalContext = ({ history, children }) => {
 
     try {
       if (validator.current.allValid()) {
+        dispatch(showLoading("serverBar"));
         const { status } = await registerAxios(user);
         if (status === 201) {
           toastSuccess("با موفقیت انجام شد.");
+          dispatch(hideLoading("serverBar"));
           history.push("/login");
         } else {
           validator.current.showMessages();
@@ -82,6 +88,7 @@ const GlobalContext = ({ history, children }) => {
     } catch (error) {
       toastError("مشکلی پیش آمده.");
       console.log(error);
+      dispatch(hideLoading("serverBar"));
     }
   };
 

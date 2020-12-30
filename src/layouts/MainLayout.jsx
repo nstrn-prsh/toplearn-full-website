@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { Helmet } from "react-helmet";
+import LoadingBar from 'react-redux-loading-bar'
 import TopNav from "./../components/Common/TopNav";
 import Header from "./../components/Course/Header";
 import MainNav from "./../components/Common/MainNav";
@@ -15,6 +16,7 @@ const MainLayout = (props) => {
         <title>خودآموز تاپلرن</title>
       </Helmet>
       <div className='landing-layer'>
+        <LoadingBar style={{ backgroundColor: 'lime', height: '5px' }}/>
         <div className='container'>
           <TopNav />
           {props.location.pathname === "/" ? <Header /> : null}

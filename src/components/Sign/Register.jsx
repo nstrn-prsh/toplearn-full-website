@@ -16,6 +16,7 @@ const Register = () => {
     policyCheck,
     handleRegister,
   } = context;
+
   return (
     <main className='client-page'>
       <div className='container-content'>
