@@ -1,12 +1,11 @@
 import React from "react";
+import Images from "./../Common/Images";
 
-const SingleMain = ({courseMain}) => {
+const SingleMain = ({ courseMain }) => {
   return (
     <section className='term-description'>
-      <img src={`https://toplearnapi.ghorbany.dev/${courseMain.imageUrl}`} alt='tl' />
-      <p>
-        {courseMain.info}
-      </p>
+      <Images img={courseMain.imageUrl} />
+      <p>{courseMain.info}</p>
 
       <h2> سرفصل های این دوره : </h2>
       <ul>
