@@ -1,7 +1,7 @@
 import React from "react";
 // import { css } from "@emotion/core";
-import ScaleLoader from "react-spinners/ScaleLoader";
-import Img from "react-image";
+import BarLoader from "react-spinners/BarLoader";
+import {Img} from "react-image";
 
 const ReactImagePreLoader = ({ img }) => {
   return (
@@ -12,7 +12,7 @@ const ReactImagePreLoader = ({ img }) => {
       ]}
       loader={
         <div className='text-center mx-auto'>
-          <ScaleLoader
+          <BarLoader
             // css={override}
             // size={150}
             color={"#4a90e2"}

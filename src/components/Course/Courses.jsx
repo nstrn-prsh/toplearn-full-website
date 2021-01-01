@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import Images from "./../Common/Images";
+
 const Courses = ({ someCourses }) => {
   return (
     <Fragment>
@@ -18,7 +19,7 @@ const Courses = ({ someCourses }) => {
             >
               <article>
                 <Link to={`/singleCourse/${course._id}`} className='img-layer'>
-                  <Images img={course.imageUrl} />
+                  <Images img={course.imageUrl}/>
                 </Link>
                 <h2>
                   <Link to={`/singleCourse/${course._id}`}>

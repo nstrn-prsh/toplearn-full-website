@@ -14,6 +14,7 @@ import Courses from "./../components/Course/Courses";
 import Logout from "./../components/Sign/Logout";
 import UserProfile from "./../components/Sign/UserProfile";
 import GlobalContext from "../context/GlobalContext";
+import Page404 from "./../components/Common/Page404";
 
 const Project = (props) => {
   const courseS = useSelector((state) => state.courses);
@@ -83,6 +84,8 @@ const Project = (props) => {
           exact
           render={() => <Courses someCourses={courseIndex} />}
         />
+
+        <Route path='*' exact component={Page404} />
       </Switch>
     </MainLayout>
   );
