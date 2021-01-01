@@ -1,17 +1,23 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Redirect } from "react-router";
 import Comments from "./../Common/Comments";
 import SingleMain from "./SingleMain";
 import SingleRightBar from "./SingleRightBar";
 import { getSingleCourse } from "./../../redux/action/singleCourse";
+import { idValidator } from "./../../utils/idValidator";
 
 const SingleCourse = ({ match }) => {
   const course = useSelector((state) => state.singleCourse);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getSingleCourse(match.params.id));
+    if (idValidator(match.params.id))
+      return dispatch(getSingleCourse(match.params.id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (!idValidator(match.params.id)) return <Redirect to='/page404' />;
 
   return (
     <div className='container'>
