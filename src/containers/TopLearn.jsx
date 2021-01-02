@@ -15,6 +15,8 @@ import Logout from "./../components/Sign/Logout";
 import UserProfile from "./../components/Sign/UserProfile";
 import GlobalContext from "../context/GlobalContext";
 import Page404 from "./../components/Common/Page404";
+import PrivateLayout from "./../layouts/PrivateLayout";
+import Dashboard from "./../components/Dashboard/Dashboard";
 
 const Project = (props) => {
   const courseS = useSelector((state) => state.courses);
@@ -39,55 +41,85 @@ const Project = (props) => {
   }, []);
 
   return (
-    <MainLayout>
-      <Switch>
-        <Route
-          path='/login'
-          render={() =>
-            isEmpty(user) ? (
-              <GlobalContext>
-                <Login />
-              </GlobalContext>
-            ) : (
-              <Redirect to='/' />
-            )
-          }
-        />
+    // e19.5
+    <switch>
+      <Route path={["/dashboard"]}>
+        <PrivateLayout />
+        <switch>
+          <Route
+            path='/dashboard'
+            exact
+            render={() =>
+              !isEmpty(user) && user.isAdmin ? (
+                <Dashboard courses={courseS} />
+              ) : (
+                <Redirect to='/' />
+              )
+            }
+          />
+        </switch>
+      </Route>
 
-        <Route
-          path='/logout'
-          render={() => (isEmpty(user) ? <Redirect to='/' /> : <Logout />)}
-        />
+      <Route path={["/"]}>
+        <MainLayout>
+          <Switch>
+            <Route
+              path='/login'
+              render={() =>
+                isEmpty(user) ? (
+                  <GlobalContext>
+                    <Login />
+                  </GlobalContext>
+                ) : (
+                  <Redirect to='/' />
+                )
+              }
+            />
 
-        <Route
-          path='/register'
-          render={() =>
-            isEmpty(user) ? (
-              <GlobalContext>
-                <Register />
-              </GlobalContext>
-            ) : (
-              <Redirect to='/' />
-            )
-          }
-        />
+            <Route
+              path='/logout'
+              render={() => (isEmpty(user) ? <Redirect to='/' /> : <Logout />)}
+            />
 
-        <Route path='/archive' component={Archive} />
+            <Route
+              path='/register'
+              render={() =>
+                isEmpty(user) ? (
+                  <GlobalContext>
+                    <Register />
+                  </GlobalContext>
+                ) : (
+                  <Redirect to='/' />
+                )
+              }
+            />
 
-        {/* e18.5: */}
-        <Route path='/singleCourse/:id' component={SingleCourse} />
+            <Route path='/archive' component={Archive} />
 
-        <Route path='/user-profile' component={UserProfile} />
+            {/* e18.5: */}
+            <Route path='/singleCourse/:id' component={SingleCourse} />
 
-        <Route
-          path='/'
-          exact
-          render={() => <Courses someCourses={courseIndex} />}
-        />
+            <Route path='/user-profile' component={UserProfile} />
 
-        <Route path='*' exact component={Page404} />
-      </Switch>
-    </MainLayout>
+            <Route
+              path='/'
+              exact
+              render={() =>
+                courseIndex.lenght > 0 ? (
+                  <Courses someCourses={courseIndex} />
+                ) : (
+                  <h2 style={{ textAlign: "center", margin: "2em" }}>
+                    دوره ی مورد نظر یافت نشد
+                  </h2>
+                )
+              }
+            />
+
+            <Route path='*' exact component={Page404} />
+          </Switch>
+        </MainLayout>
+      </Route>
+    </switch>
   );
 };
 

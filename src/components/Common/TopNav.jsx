@@ -32,7 +32,13 @@ const TopNav = () => {
               {!isEmpty(user) ? (
                 <div className='loggein '>
                   <i className='zmdi zmdi-account'></i>
-                  <NavLink to='/user-profile'> {user.fullname} </NavLink>
+                  <NavLink to='/user-profile' activeStyle={{ color: "lime" }}>
+                    {" "}
+                    {user.fullname}{" "}
+                  </NavLink>
+                  {user.isAdmin ? (
+                    <NavLink to='/dashboard'> / پنل ادمین </NavLink>
+                  ) : null}
                   <span>/</span>
                   <NavLink to='/logout'> خروج </NavLink>
                 </div>
@@ -43,7 +49,7 @@ const TopNav = () => {
                     {" "}
                     ورود{" "}
                   </NavLink>{" "}
-                  /
+                  <span>/</span>
                   <NavLink to='/register' activeStyle={{ color: "lime" }}>
                     {" "}
                     عضویت{" "}
