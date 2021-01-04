@@ -1,9 +1,13 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import AdminSideBar from "../components/Dashboard/AdminSideBar";
+import AdminTopNav from './../components/Dashboard/AdminTopNav';
 
 const PrivateLayout = ({ children }) => {
+  const user = useSelector((state) => state.user);
+
   return (
     <div id='wrapper'>
       <Helmet>
@@ -16,7 +20,7 @@ const PrivateLayout = ({ children }) => {
             تاپلرن داشبورد
           </Link>
         </div>
-        
+
         <AdminTopNav user={user} />
         <AdminSideBar />
       </nav>

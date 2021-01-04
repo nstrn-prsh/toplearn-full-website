@@ -17,6 +17,7 @@ import GlobalContext from "../context/GlobalContext";
 import Page404 from "./../components/Common/Page404";
 import PrivateLayout from "./../layouts/PrivateLayout";
 import Dashboard from "./../components/Dashboard/Dashboard";
+import CourseTable from "../components/Dashboard/CourseTable";
 
 const Project = (props) => {
   const courseS = useSelector((state) => state.courses);
@@ -45,19 +46,29 @@ const Project = (props) => {
     <switch>
       <Route path={["/dashboard"]}>
         <PrivateLayout />
-        <switch>
-          <Route
-            path='/dashboard'
-            exact
-            render={() =>
-              !isEmpty(user) && user.isAdmin ? (
-                <Dashboard courses={courseS} />
-              ) : (
-                <Redirect to='/' />
-              )
-            }
-          />
-        </switch>
+        {/* <switch> */}
+        <Route
+          path='/dashboard/courses'
+          render={() =>
+            !isEmpty(user) && user.isAdmin ? (
+              <CourseTable courses={courseS} />
+            ) : (
+              <Redirect to='/' />
+            )
+          }
+        />
+        <Route
+          path='/dashboard'
+          exact
+          render={() =>
+            !isEmpty(user) && user.isAdmin ? (
+              <Dashboard courses={courseS} />
+            ) : (
+              <Redirect to='/' />
+            )
+          }
+        />
+        {/* </switch> */}
       </Route>
 
       <Route path={["/"]}>
