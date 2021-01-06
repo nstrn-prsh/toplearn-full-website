@@ -43,32 +43,33 @@ const Project = (props) => {
 
   return (
     // e19.5
-    <switch>
+    <Switch>
       <Route path={["/dashboard"]}>
-        <PrivateLayout />
-        {/* <switch> */}
-        <Route
-          path='/dashboard/courses'
-          render={() =>
-            !isEmpty(user) && user.isAdmin ? (
-              <CourseTable courses={courseS} />
-            ) : (
-              <Redirect to='/' />
-            )
-          }
-        />
-        <Route
-          path='/dashboard'
-          exact
-          render={() =>
-            !isEmpty(user) && user.isAdmin ? (
-              <Dashboard courses={courseS} />
-            ) : (
-              <Redirect to='/' />
-            )
-          }
-        />
-        {/* </switch> */}
+        <PrivateLayout>
+          <Switch>
+            <Route
+              path='/dashboard/courses'
+              render={() =>
+                !isEmpty(user) && user.isAdmin ? (
+                  <CourseTable courses={courseS} />
+                ) : (
+                  <Redirect to='/' />
+                )
+              }
+            />
+            <Route
+              path='/dashboard'
+              exact
+              render={() =>
+                !isEmpty(user) && user.isAdmin ? (
+                  <Dashboard courses={courseS} />
+                ) : (
+                  <Redirect to='/' />
+                )
+              }
+            />
+          </Switch>
+        </PrivateLayout>
       </Route>
 
       <Route path={["/"]}>
@@ -116,7 +117,7 @@ const Project = (props) => {
               path='/'
               exact
               render={() =>
-                courseIndex.lenght > 0 ? (
+                courseIndex.length > 0 ? (
                   <Courses someCourses={courseIndex} />
                 ) : (
                   <h2 style={{ textAlign: "center", margin: "2em" }}>
@@ -130,7 +131,7 @@ const Project = (props) => {
           </Switch>
         </MainLayout>
       </Route>
-    </switch>
+    </Switch>
   );
 };
 

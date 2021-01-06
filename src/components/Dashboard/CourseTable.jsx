@@ -1,18 +1,19 @@
 import React, { useState } from "react";
-import { paginate } from "./../../utils/paginate";
-import Pagination from "./../Common/Pagination";
+import { paginate } from './../../utils/paginate';
+import Pagination from './../Common/Pagination';
 
 const CourseTable = ({ courses }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage] = useState(5);
+  const [coursePerPage] = useState(5);
+
+  const allCourses = paginate(courses, currentPage, coursePerPage);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-  const courseData = paginate(courses, currentPage, perPage);
 
   return (
-    <section style={{ marginTop: "5em", marginRight: "2em" }}>
+    <section style={{ margin: "4em" }}>
       <div>
         <div>
           <h3 className='alert alert-info text-center'>لیست دوره ها</h3>
@@ -34,15 +35,25 @@ const CourseTable = ({ courses }) => {
           <table className='table'>
             <thead>
               <tr>
-                <th scope='col'>عنوان دوره</th>
-                <th scope='col'>تصویر دوره</th>
-                <th scope='col'>قیمت دوره (تومان)</th>
-                <th scope='col'>ویرایش</th>
-                <th scope='col'>حذف</th>
+                <th>
+                  <td>عنوان دوره</td>
+                </th>
+                <th scope='col'>
+                  <td>تصویر دوره</td>
+                </th>
+                <th scope='col'>
+                  <td>قیمت دوره (تومان)</td>
+                </th>
+                <th scope='col'>
+                  <td>ویرایش</td>
+                </th>
+                <th scope='col'>
+                  <td>حذف</td>
+                </th>
               </tr>
             </thead>
             <tbody>
-              {courseData.map((course) => (
+              {allCourses.map((course) => (
                 <tr key={course._id}>
                   <td>{course.title}</td>
                   <td>
@@ -67,12 +78,12 @@ const CourseTable = ({ courses }) => {
           </table>
         </div>
         <div className='navbar-fixed-bottom text-center footer'>
-          <Pagination
-            courseS={courses.length}
-            currentPage={currentPage}
-            coursePerPage={perPage}
-            handlePageChange={handlePageChange}
-          />
+        <Pagination
+                  totalCourses={courses.length}
+                  perPage={coursePerPage}
+                  currentPage={currentPage}
+                  handlePageChange={handlePageChange}
+                />
         </div>
       </div>
     </section>
