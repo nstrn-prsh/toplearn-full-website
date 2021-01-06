@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { paginate } from './../../utils/paginate';
-import Pagination from './../Common/Pagination';
+import React, { useContext } from "react";
+import { dashboardContext } from "./../../context/dashboardContext";
+import Pagination from "./../Common/Pagination";
 
-const CourseTable = ({ courses }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [coursePerPage] = useState(5);
-
-  const allCourses = paginate(courses, currentPage, coursePerPage);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
+const CourseTable = () => {
+  const context = useContext(dashboardContext);
+  const {
+    currentPage,
+    coursePerPage,
+    allCourses,
+    handlePageChange,
+    openNewCourseDialog,
+  } = context;
 
   return (
     <section style={{ margin: "4em" }}>
@@ -18,7 +18,7 @@ const CourseTable = ({ courses }) => {
         <div>
           <h3 className='alert alert-info text-center'>لیست دوره ها</h3>
           <div className='row inline-block'>
-            <button className='btn btn-primary'>
+            <button className='btn btn-primary' onClick={openNewCourseDialog}>
               <span
                 className='fa fa-plus'
                 style={{ verticalAlign: "middle", marginLeft: "1em" }}
@@ -78,12 +78,12 @@ const CourseTable = ({ courses }) => {
           </table>
         </div>
         <div className='navbar-fixed-bottom text-center footer'>
-        <Pagination
-                  totalCourses={courses.length}
-                  perPage={coursePerPage}
-                  currentPage={currentPage}
-                  handlePageChange={handlePageChange}
-                />
+          <Pagination
+            totalCourses={allCourses.length}
+            perPage={coursePerPage}
+            currentPage={currentPage}
+            handlePageChange={handlePageChange}
+          />
         </div>
       </div>
     </section>

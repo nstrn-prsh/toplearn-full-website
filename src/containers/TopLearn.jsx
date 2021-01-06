@@ -18,6 +18,7 @@ import Page404 from "./../components/Common/Page404";
 import PrivateLayout from "./../layouts/PrivateLayout";
 import Dashboard from "./../components/Dashboard/Dashboard";
 import CourseTable from "../components/Dashboard/CourseTable";
+import GlobalDashboard from "../context/GlobalDashboard";
 
 const Project = (props) => {
   const courseS = useSelector((state) => state.courses);
@@ -51,7 +52,9 @@ const Project = (props) => {
               path='/dashboard/courses'
               render={() =>
                 !isEmpty(user) && user.isAdmin ? (
-                  <CourseTable courses={courseS} />
+                  <GlobalDashboard courses={courseS}>
+                    <CourseTable />
+                  </GlobalDashboard>
                 ) : (
                   <Redirect to='/' />
                 )
