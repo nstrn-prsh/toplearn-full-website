@@ -22,7 +22,7 @@ export const deleteCourse = (courseId) => {
 };
 
 // update dore -put
-export const updateCourse = (course, courseId) => {
+export const updateCourse = (courseId, course) => {
   return http.put(`${config.toplearnapi}/api/course/${courseId}`, course);
 };
 

@@ -10,6 +10,7 @@ const CourseTable = () => {
     allCourses,
     handlePageChange,
     openNewCourseDialog,
+    openEditCourseDialog,
   } = context;
 
   return (
@@ -67,7 +68,12 @@ const CourseTable = () => {
                   </td>
                   <td>{course.price === 0 ? "رایگان" : `${course.price}`}</td>
                   <td>
-                    <button className='btn btn-warning'>ویرایش</button>
+                    <button
+                      className='btn btn-warning'
+                      onClick={openEditCourseDialog(course)}
+                    >
+                      ویرایش
+                    </button>
                   </td>
                   <td>
                     <button className='btn btn-danger'>حذف</button>
@@ -79,7 +85,7 @@ const CourseTable = () => {
         </div>
         <div className='navbar-fixed-bottom text-center footer'>
           <Pagination
-            totalCourses={allCourses.length}
+            totalCourses={allCourses.length} //courses.length
             perPage={coursePerPage}
             currentPage={currentPage}
             handlePageChange={handlePageChange}

@@ -11,8 +11,8 @@ export const dashboardContext = createContext({
   setSearch: () => {},
   //e20.1
   openNewCourseDialog: () => {},
-  closeNewCourseDialog: () => {},
-  editCourseDialog: () => {},
+  // e20.2
+  openEditCourseDialog: () => {},
   deleteCourseDialog: () => {},
   sortCourseAsc: () => {},
   sortCourseDes: () => {},

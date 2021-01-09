@@ -52,6 +52,7 @@ const Project = (props) => {
               path='/dashboard/courses'
               render={() =>
                 !isEmpty(user) && user.isAdmin ? (
+                  // e20.1
                   <GlobalDashboard courses={courseS}>
                     <CourseTable />
                   </GlobalDashboard>

@@ -1,32 +1,50 @@
-import React, { useState } from "react";
+import React, { setState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { DialogOverlay, DialogContent } from "@reach/dialog";
-import { createNewCourse } from "./../../../redux/action/courses";
+import { handleCourseEdit } from './../../../redux/action/courses';
 
-const NewCourseDialog = ({ showDialog, closeDialog }) => {
+const EditCourseDialog = ({ course, showDialog, closeDialog }) => {
   const dispatch = useDispatch();
 
-  const [title, setTitle] = useState();
-  const [price, setPrice] = useState();
-  const [info, setInfo] = useState();
+  const [courseId, setCourseId] = setState();
+  const [title, setTitle] = setState();
+  const [price, setPrice] = setState();
+  const [imageUrl, setImageUrl] = setState();
+  const [info, setInfo] = setState();
+
+  useEffect(() => {
+    //   age arguman course meghdar dasht,
+    // state ha ba on meghdar populate mishan
+    // vaghti component unmount shod, state ha clear mishan (to return)
+    setCourseId(course._id);
+    setTitle(course.title);
+    setPrice(course.price);
+    setImageUrl(course.imageUrl);
+    setInfo(course.info);
+    return () => {
+      setCourseId();
+      setTitle();
+      setPrice();
+      setImageUrl();
+      setInfo();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [course]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    try {
-      const data = new FormData();
-      data.append("title", title);
-      data.append("price", Number.parseInt(price));
-      //daryefte YEK ax - az file haii ke entekhab shode index avalo begir
+    
+    const data = new FormData();
+    data.append("title", title);
+    // data.append("price", price);
+    data.append("price", Number.parseInt(price));
+    if (event.target.imageUrl.files[0])
       data.append("imageUrl", event.target.imageUrl.files[0]);
-      data.append("info", info);
-
-      //dispatch
-      dispatch(createNewCourse(data));
-      closeDialog();
-    } catch (error) {
-      console.log(error);
-    }
+    else data.append("imageUrl", imageUrl);
+    data.append("info", info);
+    // action
+    dispatch(handleCourseEdit(courseId, data));
+    closeDialog();
   };
 
   return (
@@ -52,44 +70,49 @@ const NewCourseDialog = ({ showDialog, closeDialog }) => {
               placeholder='عنوان دوره'
               aria-describedby='title'
               value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
+
             <input
               type='text'
               name='price'
               style={{ marginBottom: 3 }}
               className='form-control'
-              placeholder='قیمت دوره (تومان)'
+              placeholder='قیمت دوره به تومان'
               aria-describedby='price'
               value={price}
+              onChange={(e) => setPrice(e.target.value)}
             />
+
             <input
               type='file'
               name='imageUrl'
               style={{ marginBottom: 3 }}
               className='form-control mb-2'
-              placeholder='قیمت دوره (تومان)'
               aria-describedby='imageUrl'
             />
+
             <textarea
               name='info'
               placeholder='توضیحات دوره'
               className='form-control'
               style={{ marginBottom: 3 }}
               value={info}
+              onChange={(e) => setInfo(e.target.value)}
             />
 
             <button
               type='submit'
-              className='btn btn-success'
+              className='btn btn-success '
               style={{ margin: "1em" }}
             >
-              ثبت دوره
+              ویرایش دوره
             </button>
+
             <button
-              type='submit'
               className='btn btn-warning mr-5'
               style={{ margin: "1em" }}
-              onsubmit={closeDialog}
+              onClick={closeDialog}
             >
               انصراف
             </button>
@@ -100,4 +123,4 @@ const NewCourseDialog = ({ showDialog, closeDialog }) => {
   );
 };
 
-export default NewCourseDialog;
+export default EditCourseDialog;

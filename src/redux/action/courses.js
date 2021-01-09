@@ -1,5 +1,9 @@
-import { coursesAxios, newCourse } from "./../../services/courseService";
-import { toastSuccess } from "./../../utils/toastMsg";
+import {
+  coursesAxios,
+  newCourse,
+  updateCourse,
+} from "./../../services/courseService";
+import { toastError, toastSuccess } from "./../../utils/toastMsg";
 
 // data 2 meghdar dare (az server miad):
 //  1.arayeii az doreha ke ye adade total courses dare baraye meghdare tamamie dore haii ke toye db set shode
@@ -11,14 +15,43 @@ export const getAllCourses = () => {
   };
 };
 
-//e20.1
+// e20.1
 export const createNewCourse = (course) => {
   return async (dispatch, getState) => {
     const { data, status } = await newCourse(course);
     if (status === 201) toastSuccess("دوره با موفقیت اضافه شد!");
     await dispatch({
       type: "ADD_COURSE",
+      // ye copy az state dore ha begir,
+      // dore jadid ro ezafe kon behesh
+      // be in sorat state update mishe
       payload: [...getState().courses, data.course],
     });
+  };
+};
+
+// e20.2
+export const handleCourseEdit = (courseId, courseData) => {
+  return async (dispatch, getState) => {
+    const courses = [...getState().courses];
+    const updateCourses = [...courses];
+
+    const courseIndex = updateCourses.findIndex(
+      (course) => course._id == courseId
+    );
+    let course = updateCourses[courseIndex];
+    //chon formData darin az method Object estefade mikonim
+    course = { ...Object.fromEntries(courseData) };
+
+    updateCourses[courseIndex] = course;
+
+    try {
+      await dispatch({ type: "UPDATE_COURSE", payload: [...updateCourses] });
+      const { data, status } = await updateCourse(courseId, courseData);
+      if (status === 200) toastSuccess("دوره با موفقیت ویرایش شد!");
+    } catch (error) {
+      await dispatch({ type: "UPDATE_COURSE", payload: [...courses] });
+      toastError("دوباره تلاش کنید!");
+    }
   };
 };
