@@ -11,6 +11,7 @@ const CourseTable = () => {
     handlePageChange,
     openNewCourseDialog,
     openEditCourseDialog,
+    openDeleteCourseDialog,
   } = context;
 
   return (
@@ -36,21 +37,11 @@ const CourseTable = () => {
           <table className='table'>
             <thead>
               <tr>
-                <th>
-                  <td>عنوان دوره</td>
-                </th>
-                <th scope='col'>
-                  <td>تصویر دوره</td>
-                </th>
-                <th scope='col'>
-                  <td>قیمت دوره (تومان)</td>
-                </th>
-                <th scope='col'>
-                  <td>ویرایش</td>
-                </th>
-                <th scope='col'>
-                  <td>حذف</td>
-                </th>
+                <th>عنوان دوره</th>
+                <th scope='col'>تصویر دوره</th>
+                <th scope='col'>قیمت دوره (تومان)</th>
+                <th scope='col'>ویرایش</th>
+                <th scope='col'>حذف</th>
               </tr>
             </thead>
             <tbody>
@@ -60,7 +51,7 @@ const CourseTable = () => {
                   <td>
                     <a
                       href={`https://toplearnapi.ghorbany.dev/${course.imageUrl}`}
-                      target='_blank'
+                      // target='_blank'
                       className='btn btn-info btn-sm'
                     >
                       نمایش تصویر
@@ -70,13 +61,18 @@ const CourseTable = () => {
                   <td>
                     <button
                       className='btn btn-warning'
-                      onClick={openEditCourseDialog(course)}
+                      onClick={() => openEditCourseDialog(course)}
                     >
                       ویرایش
                     </button>
                   </td>
                   <td>
-                    <button className='btn btn-danger'>حذف</button>
+                    <button
+                      className='btn btn-danger'
+                      onClick={() => openDeleteCourseDialog(course)}
+                    >
+                      حذف
+                    </button>
                   </td>
                 </tr>
               ))}

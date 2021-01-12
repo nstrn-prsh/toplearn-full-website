@@ -1,16 +1,16 @@
-import React, { setState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { DialogOverlay, DialogContent } from "@reach/dialog";
-import { handleCourseEdit } from './../../../redux/action/courses';
+import { handleCourseEdit } from "./../../../redux/action/courses";
 
-const EditCourseDialog = ({ course, showDialog, closeDialog }) => {
+const EditCourseDialog = ({ showDialog, closeDialog, course }) => {
   const dispatch = useDispatch();
 
-  const [courseId, setCourseId] = setState();
-  const [title, setTitle] = setState();
-  const [price, setPrice] = setState();
-  const [imageUrl, setImageUrl] = setState();
-  const [info, setInfo] = setState();
+  const [courseId, setCourseId] = useState();
+  const [title, setTitle] = useState();
+  const [price, setPrice] = useState();
+  const [imageUrl, setImageUrl] = useState();
+  const [info, setInfo] = useState();
 
   useEffect(() => {
     //   age arguman course meghdar dasht,
@@ -33,7 +33,7 @@ const EditCourseDialog = ({ course, showDialog, closeDialog }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
+
     const data = new FormData();
     data.append("title", title);
     // data.append("price", price);
@@ -54,6 +54,7 @@ const EditCourseDialog = ({ course, showDialog, closeDialog }) => {
       style={{ background: "hsla(0, 100%, 100%, 0.9)" }}
     >
       <DialogContent
+        aria-label='Announcement'
         style={{
           border: "solid 5px hsla(0, 0%, 0%, 0.5)",
           borderRadius: "10px",

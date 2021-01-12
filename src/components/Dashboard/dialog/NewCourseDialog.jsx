@@ -36,6 +36,7 @@ const NewCourseDialog = ({ showDialog, closeDialog }) => {
       style={{ background: "hsla(0, 100%, 100%, 0.9)" }}
     >
       <DialogContent
+      aria-label='Announcement'
         style={{
           border: "solid 5px hsla(0, 0%, 0%, 0.5)",
           borderRadius: "10px",

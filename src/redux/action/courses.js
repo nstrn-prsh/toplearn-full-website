@@ -1,5 +1,6 @@
 import {
   coursesAxios,
+  deleteCourse,
   newCourse,
   updateCourse,
 } from "./../../services/courseService";
@@ -47,11 +48,30 @@ export const handleCourseEdit = (courseId, courseData) => {
 
     try {
       await dispatch({ type: "UPDATE_COURSE", payload: [...updateCourses] });
-      const { data, status } = await updateCourse(courseId, courseData);
+      const { status } = await updateCourse(courseId, courseData);
       if (status === 200) toastSuccess("دوره با موفقیت ویرایش شد!");
     } catch (error) {
       await dispatch({ type: "UPDATE_COURSE", payload: [...courses] });
       toastError("دوباره تلاش کنید!");
+    }
+  };
+};
+
+// e20.3
+export const handleCourseDelete = (courseId) => {
+  return async (dispatch, getState) => {
+    const courses = [...getState().courses];
+    const filteredCourses = courses.filter(
+      (course) => courseId._id !== courseId
+    );
+    try {
+      await dispatch({ type: "DELETE_COURSE", payload: [...filteredCourses] });
+      const { status } = await deleteCourse(courseId);
+      if (status === 200) toastSuccess("دوره با موفقیت حذف شد");
+      else toastError("دوباره تلاش کن!");
+    } catch (error) {
+      console.log(error);
+      await dispatch({ type: "DELETE_COURSE", payload: [...courses] });
     }
   };
 };

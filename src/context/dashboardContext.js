@@ -13,7 +13,8 @@ export const dashboardContext = createContext({
   openNewCourseDialog: () => {},
   // e20.2
   openEditCourseDialog: () => {},
-  deleteCourseDialog: () => {},
+  // e20.3
+  openDeleteCourseDialog: () => {},
   sortCourseAsc: () => {},
   sortCourseDes: () => {},
 });

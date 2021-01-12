@@ -3,6 +3,7 @@ import { dashboardContext } from "./dashboardContext";
 import { paginate } from "./../utils/paginate";
 import NewCourseDialog from "./../components/Dashboard/dialog/NewCourseDialog";
 import EditCourseDialog from "../components/Dashboard/dialog/EditCourseDialog";
+import DeleteCourseDialog from "../components/Dashboard/dialog/DeleteCourseDialog";
 
 const GlobalDashboard = ({ courses, children }) => {
   // courseTable
@@ -15,6 +16,8 @@ const GlobalDashboard = ({ courses, children }) => {
   // araye ba meghdare jadid por mishe
   const [currentCourse, setCurrentCourse] = useState({});
   const [editCourseDialog, setEditCourseDialog] = useState(false);
+  // e20.3
+  const [deleteCourseDialog, setDeleteCourseDialog] = useState(false);
 
   // e20.1
   const openNewCourseDialog = () => setNewCourseDialog(true);
@@ -26,6 +29,13 @@ const GlobalDashboard = ({ courses, children }) => {
     setCurrentCourse(course);
   };
   const closeEditCourseDialog = () => setEditCourseDialog(false);
+
+  // e20.3
+  const openDeleteCourseDialog = (course) => {
+    setDeleteCourseDialog(true);
+    setCurrentCourse(course);
+  };
+  const closeDeleteCourseDialog = () => setDeleteCourseDialog(false);
 
   const allCourses = paginate(courses, currentPage, coursePerPage);
 
@@ -43,6 +53,7 @@ const GlobalDashboard = ({ courses, children }) => {
         handlePageChange,
         openNewCourseDialog,
         openEditCourseDialog,
+        openDeleteCourseDialog,
       }}
     >
       <NewCourseDialog
@@ -50,9 +61,14 @@ const GlobalDashboard = ({ courses, children }) => {
         closeDialog={closeNewCourseDialog}
       />
       <EditCourseDialog
-        course={currentCourse}
         showDialog={editCourseDialog}
         closeDialog={closeEditCourseDialog}
+        course={currentCourse}
+      />
+      <DeleteCourseDialog
+        showDialog={deleteCourseDialog}
+        closeDialog={closeDeleteCourseDialog}
+        course={currentCourse}
       />
       {children}
     </dashboardContext.Provider>
