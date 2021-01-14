@@ -5,16 +5,18 @@ export const dashboardContext = createContext({
   PerPage: 5,
   CurrentCourse: {},
   allCourses: [], // CourseData ?
-  filteredCourses: [],
   handlePageChange: () => {},
   setCurrentPage: () => {},
-  setSearch: () => {},
   //e20.1
   openNewCourseDialog: () => {},
   // e20.2
   openEditCourseDialog: () => {},
   // e20.3
   openDeleteCourseDialog: () => {},
-  sortCourseAsc: () => {},
-  sortCourseDes: () => {},
+  // e20.4
+  filteredCourses: [],
+  setSearch: () => {},
+  // e20.5
+  sortCoursesAsc: () => {},
+  sortCoursesDes: () => {},
 });

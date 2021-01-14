@@ -3,7 +3,6 @@ import { dashboardContext } from "./../../context/dashboardContext";
 import Pagination from "./../Common/Pagination";
 
 const CourseTable = () => {
-  const context = useContext(dashboardContext);
   const {
     currentPage,
     coursePerPage,
@@ -12,7 +11,11 @@ const CourseTable = () => {
     openNewCourseDialog,
     openEditCourseDialog,
     openDeleteCourseDialog,
-  } = context;
+    setSearch,
+    filteredCourses,
+    sortCoursesAsc,
+    sortCoursesDes,
+  } = useContext(dashboardContext);
 
   return (
     <section style={{ margin: "4em" }}>
@@ -32,6 +35,7 @@ const CourseTable = () => {
               placeholder='جست و جوی دوره'
               className='form-control'
               style={{ width: "50%", float: "left", marginLeft: "2em" }}
+              onClick={(event) => setSearch(event.target.value.toLowerCase())}
             />
           </div>
           <table className='table'>
@@ -39,7 +43,19 @@ const CourseTable = () => {
               <tr>
                 <th>عنوان دوره</th>
                 <th scope='col'>تصویر دوره</th>
-                <th scope='col'>قیمت دوره (تومان)</th>
+                <th scope='col'>
+                  قیمت دوره (تومان)
+                  <span
+                    className='fa fa-long-arrow-up'
+                    style={{ marginRight: "0.5em" }}
+                    onClick={sortCoursesAsc}
+                  ></span>
+                  <span
+                    className='fa fa-long-arrow-down'
+                    style={{ marginRight: "0.5em" }}
+                    onClick={sortCoursesDes}
+                  ></span>
+                </th>
                 <th scope='col'>ویرایش</th>
                 <th scope='col'>حذف</th>
               </tr>
@@ -81,7 +97,7 @@ const CourseTable = () => {
         </div>
         <div className='navbar-fixed-bottom text-center footer'>
           <Pagination
-            totalCourses={allCourses.length} //courses.length
+            totalCourses={filteredCourses.length}
             perPage={coursePerPage}
             currentPage={currentPage}
             handlePageChange={handlePageChange}

@@ -19,15 +19,22 @@ export const getAllCourses = () => {
 // e20.1
 export const createNewCourse = (course) => {
   return async (dispatch, getState) => {
-    const { data, status } = await newCourse(course);
-    if (status === 201) toastSuccess("دوره با موفقیت اضافه شد!");
-    await dispatch({
-      type: "ADD_COURSE",
-      // ye copy az state dore ha begir,
-      // dore jadid ro ezafe kon behesh
-      // be in sorat state update mishe
-      payload: [...getState().courses, data.course],
-    });
+    const courses = [...getState().courses];
+
+    try {
+      const { data, status } = await newCourse(course);
+      if (status === 201) toastSuccess("دوره با موفقیت اضافه شد!");
+      await dispatch({
+        type: "ADD_COURSE",
+        // ye copy az state dore ha begir,
+        // dore jadid ro ezafe kon behesh
+        // be in sorat state update mishe
+        payload: [...getState().courses, data.course],
+      });
+    } catch (error) {
+      await dispatch({ type: "ADD_COURSE", payload: [...courses] });
+      console.log(error);
+    }
   };
 };
 
@@ -35,21 +42,30 @@ export const createNewCourse = (course) => {
 export const handleCourseEdit = (courseId, courseData) => {
   return async (dispatch, getState) => {
     const courses = [...getState().courses];
-    const updateCourses = [...courses];
-
-    const courseIndex = updateCourses.findIndex(
-      (course) => course._id == courseId
+    // vaghti dore edit mishe, dore ghablio pak mikone va dore jadid ro jaygozin mikone
+    const filteredCourses = courses.filter(
+      (course) => courseId._id !== courseId
     );
-    let course = updateCourses[courseIndex];
-    //chon formData darin az method Object estefade mikonim
-    course = { ...Object.fromEntries(courseData) };
+    // const updateCourses = [...courses];
 
-    updateCourses[courseIndex] = course;
+    // const courseIndex = updateCourses.findIndex(
+    //   (course) => course._id == courseId
+    // );
+    // let course = updateCourses[courseIndex];
+    // //chon formData darin az method Object estefade mikonim
+    // course = { ...Object.fromEntries(courseData) };
+
+    // updateCourses[courseIndex] = course;
 
     try {
-      await dispatch({ type: "UPDATE_COURSE", payload: [...updateCourses] });
-      const { status } = await updateCourse(courseId, courseData);
-      if (status === 200) toastSuccess("دوره با موفقیت ویرایش شد!");
+      const { data, status } = await updateCourse(courseId, courseData);
+      if (status === 200) {
+        toastSuccess("دوره با موفقیت ویرایش شد!");
+        await dispatch({
+          type: "UPDATE_COURSE",
+          payload: [...filteredCourses, data.courses],
+        });
+      }
     } catch (error) {
       await dispatch({ type: "UPDATE_COURSE", payload: [...courses] });
       toastError("دوباره تلاش کنید!");
@@ -64,6 +80,7 @@ export const handleCourseDelete = (courseId) => {
     const filteredCourses = courses.filter(
       (course) => courseId._id !== courseId
     );
+
     try {
       await dispatch({ type: "DELETE_COURSE", payload: [...filteredCourses] });
       const { status } = await deleteCourse(courseId);
