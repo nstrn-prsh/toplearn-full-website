@@ -1,29 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useDispatch } from "react-redux";
 import { DialogOverlay, DialogContent } from "@reach/dialog";
 import { createNewCourse } from "./../../../redux/action/courses";
+import GlobalDashboard from "./../../../context/GlobalDashboard";
 
 const NewCourseDialog = ({ showDialog, closeDialog }) => {
+  const context = useContext(GlobalDashboard);
+  const { validator } = context;
+
   const dispatch = useDispatch();
 
   const [title, setTitle] = useState();
   const [price, setPrice] = useState();
   const [info, setInfo] = useState();
+  // e20.7
+  const [imageUrl, setImageUrl] = useState();
+  const [, forceUpdate] = useState();
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     try {
-      const data = new FormData();
-      data.append("title", title);
-      data.append("price", Number.parseInt(price));
-      //daryefte YEK ax - az file haii ke entekhab shode index avalo begir
-      data.append("imageUrl", event.target.imageUrl.files[0]);
-      data.append("info", info);
+      if (validator.current.allValid()) {
+        const data = new FormData();
+        data.append("title", title);
+        data.append("price", Number.parseInt(price));
+        //daryefte YEK ax - az file haii ke entekhab shode index avalo begir
+        data.append("imageUrl", event.target.imageUrl.files[0]);
+        data.append("info", info);
 
-      //dispatch
-      dispatch(createNewCourse(data));
-      closeDialog();
+        //dispatch
+        dispatch(createNewCourse(data));
+        closeDialog();
+      } else {
+        validator.current.showMessages();
+        forceUpdate(1);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -36,7 +48,7 @@ const NewCourseDialog = ({ showDialog, closeDialog }) => {
       style={{ background: "hsla(0, 100%, 100%, 0.9)" }}
     >
       <DialogContent
-      aria-label='Announcement'
+        aria-label='Announcement'
         style={{
           border: "solid 5px hsla(0, 0%, 0%, 0.5)",
           borderRadius: "10px",
@@ -53,7 +65,13 @@ const NewCourseDialog = ({ showDialog, closeDialog }) => {
               placeholder='عنوان دوره'
               aria-describedby='title'
               value={title}
+              onChange={(event) => {
+                setPrice(event.target.value);
+                validator.current.showMessageFor("title");
+              }}
             />
+            {validator.current.message("title", title, "required|min:5")}
+
             <input
               type='text'
               name='price'
@@ -62,7 +80,14 @@ const NewCourseDialog = ({ showDialog, closeDialog }) => {
               placeholder='قیمت دوره (تومان)'
               aria-describedby='price'
               value={price}
+              onChange={(event) => {
+                setPrice(event.target.value);
+                validator.current.showMessageFor("price");
+              }}
             />
+            {validator.current.message("price", price, "required|integer")}
+
+            {/* e20.7 // in input chon az noe file niaz be value nadare */}
             <input
               type='file'
               name='imageUrl'
@@ -70,14 +95,25 @@ const NewCourseDialog = ({ showDialog, closeDialog }) => {
               className='form-control mb-2'
               placeholder='قیمت دوره (تومان)'
               aria-describedby='imageUrl'
+              onChange={(event) => {
+                setImageUrl(true);
+                validator.current.showMessageFor("imageUrl");
+              }}
             />
+            {validator.current.message("imageUrl", imageUrl, "required")}
+
             <textarea
               name='info'
               placeholder='توضیحات دوره'
               className='form-control'
               style={{ marginBottom: 3 }}
               value={info}
+              onChange={(event) => {
+                setInfo(event.target.value);
+                validator.current.message("info");
+              }}
             />
+            {validator.current.message("info", info, "required")}
 
             <button
               type='submit'

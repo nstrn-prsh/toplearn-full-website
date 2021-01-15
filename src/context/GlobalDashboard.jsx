@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import ReactValidator from "simple-react-validator";
 import { orderBy } from "lodash";
 import { dashboardContext } from "./dashboardContext";
 import { paginate } from "./../utils/paginate";
@@ -22,6 +23,18 @@ const GlobalDashboard = ({ courses, children }) => {
   // 20.4
   const [search, setSearch] = useState("");
   const [courseList, setCourseList] = useState([]);
+
+  const validator = useRef(
+    new ReactValidator({
+      messages: {
+        required: "پر کردن این قسمت الزامی است.",
+        min: "حداقل باید 5 کاراکتر باشد!",
+        email: "ایمیل وارد شده صحیح نمیباشد",
+        integer: "قیمت باید عدد باشد!",
+      },
+      element: (message) => <div style={{ color: "red" }}>{message}</div>,
+    })
+  );
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -52,8 +65,8 @@ const GlobalDashboard = ({ courses, children }) => {
   }, [courses]);
 
   const filteredCourses = courseList.filter((course) =>
-  course.title.toLowerCase().includes(search)
-);
+    course.title.toLowerCase().includes(search)
+  );
 
   // e20.5
   // list dore haro bar asase gheymat be sorat soodi/nozoli moratab kon
@@ -81,6 +94,7 @@ const GlobalDashboard = ({ courses, children }) => {
         filteredCourses,
         sortCoursesAsc,
         sortCoursesDes,
+        validator,
       }}
     >
       <NewCourseDialog

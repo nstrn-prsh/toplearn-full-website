@@ -19,4 +19,6 @@ export const dashboardContext = createContext({
   // e20.5
   sortCoursesAsc: () => {},
   sortCoursesDes: () => {},
+  // e20.7
+  validator: null,
 });
