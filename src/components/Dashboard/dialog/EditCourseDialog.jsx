@@ -4,124 +4,127 @@ import { DialogOverlay, DialogContent } from "@reach/dialog";
 import { handleCourseEdit } from "./../../../redux/action/courses";
 
 const EditCourseDialog = ({ showDialog, closeDialog, course }) => {
-  const dispatch = useDispatch();
+     const dispatch = useDispatch();
 
-  const [courseId, setCourseId] = useState();
-  const [title, setTitle] = useState();
-  const [price, setPrice] = useState();
-  const [imageUrl, setImageUrl] = useState();
-  const [info, setInfo] = useState();
+     const [courseId, setCourseId] = useState();
+     const [title, setTitle] = useState();
+     const [price, setPrice] = useState();
+     const [imageUrl, setImageUrl] = useState();
+     const [info, setInfo] = useState();
 
-  useEffect(() => {
-    //   age arguman course meghdar dasht,
-    // state ha ba on meghdar populate mishan
-    // vaghti component unmount shod, state ha clear mishan (to return)
-    setCourseId(course._id);
-    setTitle(course.title);
-    setPrice(course.price);
-    setImageUrl(course.imageUrl);
-    setInfo(course.info);
-    return () => {
-      setCourseId();
-      setTitle();
-      setPrice();
-      setImageUrl();
-      setInfo();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [course]);
+     useEffect(() => {
+          //   age arguman course meghdar dasht,
+          // state ha ba on meghdar populate mishan
+          // vaghti component unmount shod, state ha clear mishan (to return)
+          setCourseId(course._id);
+          setTitle(course.title);
+          setPrice(course.price);
+          setImageUrl(course.imageUrl);
+          setInfo(course.info);
+          return () => {
+               setCourseId();
+               setTitle();
+               setPrice();
+               setImageUrl();
+               setInfo();
+          };
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+     }, [course]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+     const handleSubmit = (event) => {
+          event.preventDefault();
 
-    const data = new FormData();
-    data.append("title", title);
-    // data.append("price", price);
-    data.append("price", Number.parseInt(price));
-    if (event.target.imageUrl.files[0])
-      data.append("imageUrl", event.target.imageUrl.files[0]);
-    else data.append("imageUrl", imageUrl);
-    data.append("info", info);
-    // action
-    dispatch(handleCourseEdit(courseId, data));
-    closeDialog();
-  };
+          let data = new FormData();
+          data.append("title", title);
+          // data.append("price", price);
+          data.append("price", price);
+          // Number.parseInt(price)
+          if (event.target.imageUrl.files[0])
+               data.append("imageUrl", event.target.imageUrl.files[0]);
+          else data.append("imageUrl", imageUrl);
+          data.append("info", info);
 
-  return (
-    <DialogOverlay
-      isOpen={showDialog}
-      onDismiss={closeDialog}
-      style={{ background: "hsla(0, 100%, 100%, 0.9)" }}
-    >
-      <DialogContent
-        aria-label='Announcement'
-        style={{
-          border: "solid 5px hsla(0, 0%, 0%, 0.5)",
-          borderRadius: "10px",
-          boxShadow: "0px 10px 50px hsla(0, 0%, 0%, 0.33)",
-        }}
-      >
-        <div className='inner form-layer'>
-          <form onSubmit={handleSubmit}>
-            <input
-              type='text'
-              name='title'
-              style={{ marginBottom: 3 }}
-              className='form-control'
-              placeholder='عنوان دوره'
-              aria-describedby='title'
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
+          // console.log(data);
+          // action
+          dispatch(handleCourseEdit(courseId, data));
+          closeDialog();
+     };
 
-            <input
-              type='text'
-              name='price'
-              style={{ marginBottom: 3 }}
-              className='form-control'
-              placeholder='قیمت دوره به تومان'
-              aria-describedby='price'
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-            />
+     return (
+          <DialogOverlay
+               isOpen={showDialog}
+               onDismiss={closeDialog}
+               style={{ background: "hsla(0, 100%, 100%, 0.9)" }}
+          >
+               <DialogContent
+                    aria-label='Announcement'
+                    style={{
+                         border: "solid 5px hsla(0, 0%, 0%, 0.5)",
+                         borderRadius: "10px",
+                         boxShadow: "0px 10px 50px hsla(0, 0%, 0%, 0.33)",
+                    }}
+               >
+                    <div className='inner form-layer'>
+                         <form onSubmit={handleSubmit}>
+                              <input
+                                   type='text'
+                                   name='title'
+                                   style={{ marginBottom: 3 }}
+                                   className='form-control'
+                                   placeholder='عنوان دوره'
+                                   aria-describedby='title'
+                                   value={title}
+                                   onChange={(e) => setTitle(e.target.value)}
+                              />
 
-            <input
-              type='file'
-              name='imageUrl'
-              style={{ marginBottom: 3 }}
-              className='form-control mb-2'
-              aria-describedby='imageUrl'
-            />
+                              <input
+                                   type='text'
+                                   name='price'
+                                   style={{ marginBottom: 3 }}
+                                   className='form-control'
+                                   placeholder='قیمت دوره به تومان'
+                                   aria-describedby='price'
+                                   value={price}
+                                   onChange={(e) => setPrice(e.target.value)}
+                              />
 
-            <textarea
-              name='info'
-              placeholder='توضیحات دوره'
-              className='form-control'
-              style={{ marginBottom: 3 }}
-              value={info}
-              onChange={(e) => setInfo(e.target.value)}
-            />
+                              <input
+                                   type='file'
+                                   name='imageUrl'
+                                   style={{ marginBottom: 3 }}
+                                   className='form-control mb-2'
+                                   aria-describedby='imageUrl'
+                              />
 
-            <button
-              type='submit'
-              className='btn btn-success '
-              style={{ margin: "1em" }}
-            >
-              ویرایش دوره
-            </button>
+                              <textarea
+                                   name='info'
+                                   placeholder='توضیحات دوره'
+                                   className='form-control'
+                                   style={{ marginBottom: 3 }}
+                                   value={info}
+                                   onChange={(e) => setInfo(e.target.value)}
+                              />
 
-            <button
-              className='btn btn-warning mr-5'
-              style={{ margin: "1em" }}
-              onClick={closeDialog}
-            >
-              انصراف
-            </button>
-          </form>
-        </div>
-      </DialogContent>
-    </DialogOverlay>
-  );
+                              <button
+                                   type='submit'
+                                   className='btn btn-success '
+                                   style={{ margin: "1em" }}
+                              >
+                                   ویرایش دوره
+                              </button>
+
+                              <button
+                                   className='btn btn-warning mr-5'
+                                   style={{ margin: "1em" }}
+                                   onClick={closeDialog}
+                              >
+                                   انصراف
+                              </button>
+                         </form>
+                    </div>
+               </DialogContent>
+          </DialogOverlay>
+     );
 };
 
 export default EditCourseDialog;

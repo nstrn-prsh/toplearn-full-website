@@ -1,8 +1,8 @@
 import {
-  coursesAxios,
-  deleteCourse,
-  newCourse,
-  updateCourse,
+     coursesAxios,
+     deleteCourse,
+     newCourse,
+     updateCourse,
 } from "./../../services/courseService";
 import { toastError, toastSuccess } from "./../../utils/toastMsg";
 
@@ -10,85 +10,85 @@ import { toastError, toastSuccess } from "./../../utils/toastMsg";
 //  1.arayeii az doreha ke ye adade total courses dare baraye meghdare tamamie dore haii ke toye db set shode
 //
 export const getAllCourses = () => {
-  return async (dispatch) => {
-    const { data } = await coursesAxios();
-    await dispatch({ type: "INIT", payload: data.courses });
-  };
+     return async (dispatch) => {
+          const { data } = await coursesAxios();
+          await dispatch({ type: "INIT", payload: data.courses });
+     };
 };
 
 // e20.1
 export const createNewCourse = (course) => {
-  return async (dispatch, getState) => {
-    const courses = [...getState().courses];
-
-    try {
-      const { data, status } = await newCourse(course);
-      if (status === 201) toastSuccess("دوره با موفقیت اضافه شد!");
-      await dispatch({
-        type: "ADD_COURSE",
-        // ye copy az state dore ha begir,
-        // dore jadid ro ezafe kon behesh
-        // be in sorat state update mishe
-        payload: [...getState().courses, data.course],
-      });
-    } catch (error) {
-      await dispatch({ type: "ADD_COURSE", payload: [...courses] });
-      console.log(error);
-    }
-  };
+     return async (dispatch, getState) => {
+          const { data, status } = await newCourse(course);
+          if (status === 201) toastSuccess("دوره با موفقیت اضافه شد!");
+          await dispatch({
+               type: "ADD_COURSE",
+               // ye copy az state dore ha begir,
+               // dore jadid ro ezafe kon behesh
+               // be in sorat state update mishe
+               payload: [...getState().courses, data.course],
+          });
+     };
 };
 
 // e20.2
 export const handleCourseEdit = (courseId, courseData) => {
-  return async (dispatch, getState) => {
-    const courses = [...getState().courses];
-    // vaghti dore edit mishe, dore ghablio pak mikone va dore jadid ro jaygozin mikone
-    const filteredCourses = courses.filter(
-      (course) => courseId._id !== courseId
-    );
-    // const updateCourses = [...courses];
+     return async (dispatch, getState) => {
+          const courses = [...getState().courses];
+          // vaghti dore edit mishe, dore ghablio pak mikone va dore jadid ro jaygozin mikone
+          const filteredCourses = courses.filter(
+               (course) => course._id !== courseId
+          );
 
-    // const courseIndex = updateCourses.findIndex(
-    //   (course) => course._id == courseId
-    // );
-    // let course = updateCourses[courseIndex];
-    // //chon formData darin az method Object estefade mikonim
-    // course = { ...Object.fromEntries(courseData) };
+          const updateCourses = [...filteredCourses];
 
-    // updateCourses[courseIndex] = course;
+          const courseIndex = updateCourses.findIndex(
+               (course) => course._id == courseId
+          );
+          let course = updateCourses[courseIndex];
+          //chon formData darin az method Object estefade mikonim
+          course = { ...Object.fromEntries(courseData) };
 
-    try {
-      const { data, status } = await updateCourse(courseId, courseData);
-      if (status === 200) {
-        toastSuccess("دوره با موفقیت ویرایش شد!");
-        await dispatch({
-          type: "UPDATE_COURSE",
-          payload: [...filteredCourses, data.courses],
-        });
-      }
-    } catch (error) {
-      await dispatch({ type: "UPDATE_COURSE", payload: [...courses] });
-      toastError("دوباره تلاش کنید!");
-    }
-  };
+          updateCourses[courseIndex] = course;
+
+          try {
+               const { data, status } = await updateCourse(
+                    courseId,
+                    courseData
+               );
+               await dispatch({
+                    type: "UPDATE_COURSE",
+                    payload: [...updateCourses, data.course],
+               });
+               if (status === 200) {
+                    toastSuccess("دوره با موفقیت ویرایش شد!");
+               }
+          } catch (error) {
+               await dispatch({ type: "UPDATE_COURSE", payload: [...courses] });
+               toastError("دوباره تلاش کنید!");
+          }
+     };
 };
 
 // e20.3
 export const handleCourseDelete = (courseId) => {
-  return async (dispatch, getState) => {
-    const courses = [...getState().courses];
-    const filteredCourses = courses.filter(
-      (course) => courseId._id !== courseId
-    );
+     return async (dispatch, getState) => {
+          const courses = [...getState().courses];
+          const filteredCourses = courses.filter(
+               (course) => course._id !== courseId
+          );
 
-    try {
-      await dispatch({ type: "DELETE_COURSE", payload: [...filteredCourses] });
-      const { status } = await deleteCourse(courseId);
-      if (status === 200) toastSuccess("دوره با موفقیت حذف شد");
-      else toastError("دوباره تلاش کن!");
-    } catch (error) {
-      console.log(error);
-      await dispatch({ type: "DELETE_COURSE", payload: [...courses] });
-    }
-  };
+          try {
+               await dispatch({
+                    type: "DELETE_COURSE",
+                    payload: [...filteredCourses],
+               });
+               const { status } = await deleteCourse(courseId);
+               if (status === 200) toastSuccess("دوره با موفقیت حذف شد");
+               else toastError("دوباره تلاش کن!");
+          } catch (error) {
+              //  console.log(error);
+               await dispatch({ type: "DELETE_COURSE", payload: [...courses] });
+          }
+     };
 };

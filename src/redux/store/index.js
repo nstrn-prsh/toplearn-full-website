@@ -5,17 +5,18 @@ import { reducers } from "./../reducer";
 import { getAllCourses } from "./../action/courses";
 
 export const store = createStore(
-  reducers,
-  // emale chanda middleWare
-  compose(
-    applyMiddleware(
-      thunk,
-      loadingBarMiddleware({
-        scope: "serverBar",
-      })
-    ),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
+     reducers,
+     // emale chanda middleWare
+     compose(
+          applyMiddleware(
+               thunk,
+               loadingBarMiddleware({
+                    scope: "serverBar",
+               })
+          )
+          // ,
+          // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+     )
 );
 
 // INIT amade sazi: chon dade ha az server mian bayad yekam sabr konim
@@ -24,4 +25,4 @@ export const store = createStore(
 store.dispatch(getAllCourses());
 
 // taghirate toye store
-store.subscribe(() => console.log(store.getState()));
+// store.subscribe(() => console.log(store.getState()));

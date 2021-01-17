@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ReactValidator from "simple-react-validator";
 import { withRouter } from "react-router";
 import { useDispatch } from "react-redux";
@@ -18,6 +18,16 @@ const GlobalContext = ({ history, children }) => {
   const [policy, setPolicy] = useState();
   const [, forceUpdate] = useState();
 
+  useEffect(() => {
+    return () => {
+      setFullname();
+      setEmail();
+      setPassword();
+      setPolicy();
+      forceUpdate();
+    };
+  }, []);
+
   // simple-react-validator
   const validator = useRef(
     new ReactValidator({
@@ -29,13 +39,6 @@ const GlobalContext = ({ history, children }) => {
       element: (message) => <div style={{ color: "red" }}>{message}</div>,
     })
   );
-
-  const reset = () => {
-    setFullname("");
-    setEmail("");
-    setPassword("");
-    setPolicy();
-  };
 
   // Login
   const handleLogin = async (event) => {
@@ -53,7 +56,6 @@ const GlobalContext = ({ history, children }) => {
           dispatch(addUser(decodeToken(data.token).payload.user)); //e18.6
           // redirect user to page after login
           history.replace("/");
-          reset();
           console.log(data);
         }
       } else {
@@ -117,7 +119,6 @@ const GlobalContext = ({ history, children }) => {
         password,
         policy,
         validator,
-        reset,
         fullNameInput,
         emailInput,
         passwordInput,
