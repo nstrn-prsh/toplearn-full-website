@@ -3,7 +3,7 @@
 /imports.txt
 # dependencies
 /node_modules
-/toplearn-api/node_modules
+/toplearnbackend/node_modules
 /.pnp
 .pnp.js
 /debug.log
@@ -11,7 +11,7 @@
 
 # testing
 /coverage
-/toplearn-api/coverage
+/toplearnbackend/coverage
 
 # production
 /build

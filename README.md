@@ -1,12 +1,12 @@
 <div dir="rtl">
 ## پروژه کامل سایت تاپلرن با react
-این پروژه شامل ئوره های سایت، فیلتر دوره ها، ویرایش حذف و اضافه کردن دوره توسط ادمین ، فرم های ثبت نام و ورود و داشبورد میباشد.
+این پروژه شامل دوره های سایت، فیلتر دوره ها، ویرایش حذف و اضافه کردن دوره توسط ادمین ، فرم های ثبت نام و ورود و داشبورد میباشد.
 
 خمچنین دارای دو سرور انلاین و افلاین است.
 </div>
 
 ```bash
-$ cd toplearn-api
+$ cd toplearnbackend
 $ npm install
 $ npm start 
 $ cd ../
@@ -16,13 +16,9 @@ $ npm start
 
 <div dir="rtl">
 
-<div>
+<div dir="ltr">
 open mongodb:
 fill in connection field individually -> connect
-
-cd toplearn-api
-npm i
-npm start
 
 nokte: age mongodb run nashode bood : 
 win+r -> services.msc
